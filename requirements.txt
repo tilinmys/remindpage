@@ -1,0 +1,1 @@
+psycopg[binary]>=3.1   # only needed for PostgreSQL (DATABASE_URL); SQLite needs nothing

@@ -1,0 +1,16 @@
+# local data and tooling (never published)
+data/
+__pycache__/
+*.pyc
+drafts/
+graphify-out/
+.env
+
+# assets: only what the current page uses is published
+assets/*
+!assets/favicon-64.png
+!assets/hero-landscape-crisp.webp
+!assets/mark.svg
+!assets/remind-logo-2026-white.png
+!assets/remind-viaduct-duotone.webp
+!assets/wordmark.png

@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ReMind for Her · Cognitive wellness by MyStree</title>
+  <meta name="description" content="ReMind for Her is a 6-week, psychologist-led cognitive wellness program by MyStree for women navigating perimenopause and menopause." />
+  <meta name="theme-color" content="#FFFFFF" />
+  <link rel="icon" type="image/png" href="assets/favicon-64.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="assets/hero-landscape-crisp.webp" />
+
+  <style>
+    /* ReMind by Her. Two colours only below the hero: pure white #FFFFFF and burgundy #5B1A23.
+       Type: Fraunces (headings, matches the logo) + Figtree (text), sizes 14 16 18 20 24 30 36 48.
+       Spacing 4 8 12 16 24 32 40 48 64 96. Grids share rows (subgrid), so every line aligns. */
+    :root {
+      --white: #FFFFFF; --burgundy: #5B1A23;
+      --sky: #FBF0EE; --plum: #4B1722; --muted: #6D424A; --mulberry: #5B1A23; --ivory: #F7F0EB;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --nav-h: 80px; --gutter: clamp(24px, 5vw, 48px);
+      --serif: "Fraunces", Georgia, serif; --sans: "Figtree", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    body { background: var(--white); color: var(--burgundy); font-family: var(--sans); font-size: 16px; line-height: 24px; font-kerning: normal; font-variant-ligatures: common-ligatures contextual; font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+    :where(a, button, input, select):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    .skip { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--white); color: var(--burgundy); padding: 12px 16px; border: 2px solid var(--burgundy); border-radius: 999px; }
+    .skip:focus { top: 12px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------------- Buttons: the fill wipes between burgundy and white ---------------- */
+    .btn { position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 24px; border: 2px solid var(--burgundy); border-radius: 999px; background: var(--burgundy); color: var(--white); text-decoration: none; font: 600 16px/24px var(--sans); cursor: pointer; transition: color .4s var(--ease); }
+    .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--white); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); }
+    .btn:hover { color: var(--burgundy); }
+    .btn:hover::before { transform: scaleX(1); }
+    .btn:active { transform: translateY(1px); }
+    .btn-sm { min-height: 44px; padding: 8px 20px; font-size: 14px; line-height: 20px; }
+    .btn-invert { background: var(--white); color: var(--burgundy); border-color: var(--white); }
+    .btn-invert::before { background: var(--burgundy); }
+    .btn-invert:hover { color: var(--white); }
+
+    /* ---------------- Nav ---------------- */
+    .nav { position: fixed; inset: 0 0 auto; z-index: 40; height: var(--nav-h); display: flex; align-items: center; transition: background-color .3s var(--ease); }
+    .nav.scrolled { background: var(--white); box-shadow: 0 1px 0 var(--burgundy); }
+    .nav-inner { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    /* Logo: vector mark + wordmark */
+    .nav-logo { display: flex; align-items: center; gap: 4px; height: 56px; text-decoration: none; }
+    .nav-logo .mark { height: 100%; width: auto; }
+    .nav-logo .wordmark { height: 100%; width: auto; }
+    .nav-links { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; font-weight: 500; }
+    .nav-links a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size .4s var(--ease); padding-bottom: 2px; }
+    .nav-links a:hover { background-size: 100% 1.5px; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .menu-btn { display: none; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--burgundy); background: var(--white); color: var(--burgundy); cursor: pointer; place-items: center; }
+    .menu-btn .bars { position: relative; width: 18px; height: 12px; }
+    .menu-btn .bars::before, .menu-btn .bars::after, .menu-btn .bars span { content: ""; position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform .3s var(--ease), opacity .3s var(--ease); }
+    .menu-btn .bars::before { top: 0; } .menu-btn .bars span { top: 5px; } .menu-btn .bars::after { top: 10px; }
+    .menu-btn[aria-expanded="true"] .bars::before { transform: translateY(5px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] .bars span { opacity: 0; }
+    .menu-btn[aria-expanded="true"] .bars::after { transform: translateY(-5px) rotate(-45deg); }
+    .mobile-menu { position: fixed; z-index: 39; inset: var(--nav-h) 0 auto; padding: 8px var(--gutter) 24px; background: var(--white); border-bottom: 1.5px solid var(--burgundy); }
+    .mobile-menu[hidden] { display: none; }
+    .mobile-menu a:not(.btn) { display: flex; align-items: center; min-height: 56px; border-bottom: 1px solid var(--burgundy); text-decoration: none; font-family: var(--serif); font-size: 24px; line-height: 32px; font-weight: 500; }
+    .mobile-menu .btn { width: 100%; margin-top: 24px; }
+
+    /* ================= HERO: one still screen; its hills meet the burgundy band below on a crisp line ================= */
+    .home { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; background: var(--sky); }
+    .stage-bg { position: absolute; inset: 0; }
+    .landscape { position: absolute; left: 50%; bottom: 0; width: max(100%, 150vh); transform: translateX(-50%); }
+    .landscape img { width: 100%; }
+    .landscape::after { content: ""; position: absolute; inset: -1px 0 auto; height: 22%; background: linear-gradient(var(--sky), rgb(251 237 235 / 0%)); }
+    .copy { position: relative; z-index: 2; margin: 0 auto; padding-top: calc(var(--nav-h) + clamp(40px, 9vh, 104px)); width: min(100% - 2 * var(--gutter), 760px); text-align: center; }
+    h1 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 60px; line-height: 64px; letter-spacing: -.025em; color: var(--plum); text-wrap: balance; }
+    h1 em { font-style: italic; font-weight: 400; color: var(--mulberry); }
+    .lede { margin: 24px auto 0; max-width: 34em; font-size: 18px; line-height: 28px; color: var(--muted); text-wrap: pretty; }
+    .copy .btn { margin-top: 32px; }
+    .byline { margin: 16px 0 0; font-size: 14px; line-height: 20px; color: var(--muted); }
+
+    /* ================= Sections ================= */
+    .sheet { position: relative; background: var(--white); }
+    .wrap { max-width: 1152px; margin: 0 auto; }
+    .solid, .site-footer { position: relative; z-index: 6; }
+    .band { padding: 96px var(--gutter); }
+    .band-dark { background: var(--burgundy); color: var(--white); }
+    .h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 48px; line-height: 52px; letter-spacing: -.02em; text-wrap: balance; }
+    .lead { margin: 16px 0 0; max-width: 36em; font-size: 18px; line-height: 28px; text-wrap: pretty; }
+    .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: 48px; }
+    .sec-head .lead { margin: 0; justify-self: end; max-width: 26em; }
+
+    /* The grid system: 1.5px rules in the section's ink, cells share row tracks (subgrid). */
+    .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: currentColor; border: 1px solid currentColor; }
+    .cell { position: relative; isolation: isolate; display: grid; grid-template-rows: subgrid; row-gap: 0; padding: 32px; background: var(--white); color: var(--burgundy); transition: color .4s var(--ease); }
+    .band-dark .cell { background: var(--burgundy); color: var(--white); }
+    .cell::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--burgundy); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--ease); }
+    .band-dark .cell::before { background: var(--white); }
+    @media (hover: hover) {
+      .cell:hover { color: var(--white); }
+      .cell:hover::before { transform: scaleY(1); }
+      .band-dark .cell:hover { color: var(--burgundy); }
+    }
+    .cell .k { font-size: 14px; line-height: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .cell h3 { margin: 0; font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; text-wrap: pretty; }
+    .cell p { margin: 0; text-wrap: pretty; }
+
+    /* 1b · Brand moment (burgundy band). Scroll sets one number, --p (0 to 1). Every part of the
+       logo is its own small layer that only changes transform and opacity, so the graphics card
+       moves it without redrawing: smooth even on low-end phones. 1 logo unit = 100cqw / 326. */
+    .brand-moment { --p: 1; position: relative; height: 240vh; height: 240svh; }
+    .bm-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-content: center; justify-items: center; gap: 40px; padding: var(--nav-h) var(--gutter) 40px; overflow: hidden; contain: layout paint; }
+    .bm-art { position: relative; width: min(640px, 84vw, calc(50svh * 326 / 216)); aspect-ratio: 326 / 216; container-type: inline-size; }
+    .bm-part { position: absolute; display: block; overflow: visible; will-change: transform, opacity; backface-visibility: hidden; }
+    .bm-part path { fill: var(--white); }
+    .bm-pink path { fill: #E1909D; }
+    .bm-face {
+      --t: clamp(0, var(--p) / .2, 1);
+      opacity: var(--t);
+      transform: translate3d(0, calc((1 - var(--t)) * (1 - var(--t)) * 16px), 0);
+    }
+    .bm-strand {               /* each strand flows out from the face, nearest first */
+      --t: clamp(0, (var(--p) - var(--s)) / .22, 1);
+      opacity: var(--t);
+      transform: translate3d(calc((1 - var(--t)) * (1 - var(--t)) * var(--dx) * 100cqw / 326), 0, 0);
+    }
+    .bm-pink {                 /* the pink piece drifts in and fits */
+      --t: clamp(0, (var(--p) - .56) / .2, 1); --e: calc(1 - (1 - var(--t)) * (1 - var(--t)));
+      opacity: var(--t);
+      transform: translate3d(calc((1 - var(--e)) * -64 * 100cqw / 326), calc((1 - var(--e)) * -40 * 100cqw / 326), 0) rotate(calc((1 - var(--e)) * -50deg)) scale(calc(.55 + .45 * var(--e)));
+    }
+    .bm-dark {                 /* then the second piece locks in beside it */
+      --t: clamp(0, (var(--p) - .66) / .2, 1); --e: calc(1 - (1 - var(--t)) * (1 - var(--t)));
+      opacity: var(--t);
+      transform: translate3d(calc((1 - var(--e)) * -54 * 100cqw / 326), calc((1 - var(--e)) * 48 * 100cqw / 326), 0) rotate(calc((1 - var(--e)) * 45deg)) scale(calc(.55 + .45 * var(--e)));
+    }
+    .bm-line {
+      --t: clamp(0, (var(--p) - .82) / .14, 1);
+      margin: 0; max-width: 18ch; text-align: center; font-family: var(--serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -.015em; text-wrap: balance; color: var(--white);
+      opacity: var(--t); transform: translate3d(0, calc((1 - var(--t)) * 16px), 0); will-change: transform, opacity;
+    }
+
+    /* 2 · Understand it, Practise it, Live it */
+    .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .pillars .cell { grid-row: span 2; padding: 48px 40px; }
+    .pillars h3 { font-size: 48px; line-height: 52px; align-self: end; }
+    .pillars p { padding-top: 16px; font-size: 18px; line-height: 28px; max-width: 26ch; }
+
+    /* 3 · How it works */
+    .days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .days .cell { grid-row: span 4; padding: 24px 16px; }
+    .days h3 { padding-top: 40px; font-size: 20px; line-height: 28px; }
+    .days p { padding-top: 8px; font-size: 14px; line-height: 20px; }
+    .days .t { padding-top: 24px; font-size: 14px; line-height: 20px; font-weight: 600; align-self: end; }
+    .days .live { background: var(--white) !important; color: var(--burgundy) !important; }
+    .days .live::before { background: var(--burgundy) !important; }
+    @media (hover: hover) { .days .live:hover { color: var(--white) !important; } }
+
+    /* 4 · The program */
+    .weeks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .weeks .cell { grid-row: span 4; padding: 40px; }
+    .weeks h3 { padding-top: 48px; font-size: 30px; line-height: 36px; }
+    .weeks .q { padding-top: 8px; font-family: var(--serif); font-size: 18px; line-height: 28px; }
+    .weeks .d { padding-top: 24px; align-self: end; }
+
+    /* 5 · Journey */
+    .journey-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 64px; align-items: center; }
+    .journey-grid .btn { margin-top: 32px; }
+    .journey-art { margin: 0; border: 1.5px solid var(--white); overflow: hidden; aspect-ratio: 16 / 10; }
+    .journey-art img { width: 100%; height: 100%; object-fit: cover; object-position: center 70%; transform: scale(1.02); transition: transform 1.2s var(--ease); }
+    @media (hover: hover) { .journey-art:hover img { transform: scale(1.06); } }
+
+    /* 6 · Join: white page, burgundy form */
+    .join-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+    .join-copy { position: sticky; top: calc(var(--nav-h) + 32px); }
+    .promise { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1.5px solid var(--burgundy); }
+    .promise li { padding: 16px 0; border-bottom: 1.5px solid var(--burgundy); font-size: 18px; line-height: 28px; }
+    .join-help { margin: 32px 0 0; }
+    .join-help a { font-weight: 600; text-underline-offset: 4px; }
+    .join-card { padding: 40px; background: var(--burgundy); color: var(--white); }
+    .join-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+    .join-card-head h3 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 30px; line-height: 36px; }
+    .join-card-head .free { margin: 0; font-size: 16px; font-weight: 600; }
+    .join-card-sub { margin: 8px 0 32px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { margin-bottom: 8px; font-size: 14px; line-height: 20px; font-weight: 600; }
+    .field label i { font-style: normal; font-weight: 400; }
+    .field input[type="text"], .field input[type="email"], .field input[type="tel"], .field select {
+      width: 100%; min-height: 52px; padding: 12px 16px; border: 2px solid var(--white); border-radius: 8px; font: inherit; color: var(--burgundy); background: var(--white); appearance: none; -webkit-appearance: none; transition: box-shadow .3s var(--ease); }
+    .field select { padding-right: 40px; cursor: pointer;
+      background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%235B1A23' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center; }
+    .field input:focus, .field select:focus { outline: none; box-shadow: 0 0 0 3px var(--burgundy), 0 0 0 5px var(--white); }
+    .field.bad input, .field.bad select { box-shadow: 0 0 0 3px var(--burgundy), 0 0 0 5px var(--white); }
+    .phone { display: flex; }
+    .phone .cc { display: grid; place-items: center; padding: 0 16px; border-radius: 8px 0 0 8px; background: var(--white); color: var(--burgundy); font-weight: 600; border-right: 1.5px solid var(--burgundy); }
+    .phone input { border-radius: 0 8px 8px 0 !important; }
+    .hint { margin-top: 8px; font-size: 14px; line-height: 20px; }
+    .err { font-size: 14px; line-height: 20px; font-weight: 600; }
+    .err:not(:empty) { margin-top: 8px; }
+    .err:not(:empty)::before { content: "! "; }
+    .consent { position: relative; display: grid !important; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; margin: 8px 0 0 !important; font-weight: 400 !important; font-size: 14px !important; line-height: 20px; cursor: pointer; }
+    .consent input { position: absolute; opacity: 0; width: 24px; height: 24px; margin: 0; }
+    .consent .box { width: 24px; height: 24px; border-radius: 4px; border: 2px solid var(--white); display: grid; place-items: center; transition: background-color .3s var(--ease); }
+    .consent input:checked + .box { background: var(--white); }
+    .consent input:checked + .box::after { content: ""; width: 10px; height: 6px; border: solid var(--burgundy); border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
+    .consent input:focus-visible + .box { outline: 2px solid var(--white); outline-offset: 3px; }
+    .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    .submit { width: 100%; margin-top: 32px; min-height: 56px; font-size: 18px; line-height: 28px; }
+    .submit[disabled] { opacity: .8; cursor: progress; }
+    .form-err { margin: 24px 0 0; padding: 12px 16px; border: 2px solid var(--white); border-radius: 8px; font-weight: 600; }
+    .form-err a { color: inherit; }
+    .done { text-align: center; padding: 48px 8px; }
+    .done:focus { outline: none; }
+    .done-mark { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--white); color: var(--burgundy); font-size: 24px; }
+    .done h3 { margin: 16px 0 0; font-family: var(--serif); font-weight: 500; font-size: 30px; line-height: 36px; }
+    .done p { margin: 12px auto 0; max-width: 26em; }
+
+    /* Footer */
+    .site-footer { background: var(--burgundy); color: var(--white); padding: 64px var(--gutter) 32px; }
+    .foot-inner { max-width: 1152px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; align-items: start; }
+    .foot-brand img { width: 176px; height: auto; }
+    .foot-brand p { margin: 16px 0 0; max-width: 26em; }
+    .foot-h { margin: 0 0 8px; font-family: var(--sans); font-size: 14px; line-height: 20px; font-weight: 600; }
+    .foot-links, .foot-contact { display: grid; }
+    .foot-links a, .foot-contact a { display: inline-flex; align-items: center; min-height: 44px; width: fit-content; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 0 1.5px no-repeat; transition: background-size .4s var(--ease); }
+    .foot-links a:hover, .foot-contact a:hover { background-size: 100% 1.5px; }
+    .site-footer .fine { max-width: 1152px; margin: 40px auto 0; padding-top: 24px; border-top: 1.5px solid var(--white); font-size: 14px; line-height: 20px; }
+    .foot-copy { max-width: 1152px; margin: 8px auto 0; font-size: 14px; line-height: 20px; }
+
+    /* Mobile sticky CTA */
+    .mobile-cta { position: fixed; z-index: 45; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 20px; border-radius: 999px; background: var(--white); border: 1.5px solid var(--burgundy); transform: translateY(160%); transition: transform .5s var(--ease); }
+    .mobile-cta p { margin: 0; font-size: 16px; line-height: 20px; font-weight: 600; }
+    .mobile-cta .btn { flex-shrink: 0; }
+    .mobile-cta.show { transform: none; }
+
+    /* ---------------- Tablet ---------------- */
+    @media (max-width: 1100px) {
+      .days { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .days .live { grid-column: span 2; }
+      .join-grid { grid-template-columns: 1fr; gap: 48px; }
+      .join-copy { position: static; }
+    }
+    @media (max-width: 960px) {
+      h1 { font-size: 48px; line-height: 52px; }
+      .nav-links { display: none; }
+      .menu-btn { display: grid; }
+      .mobile-cta { display: flex; }
+      .sec-head { grid-template-columns: 1fr; gap: 16px; }
+      .sec-head .lead { justify-self: start; }
+      .pillars, .weeks { grid-template-columns: 1fr 1fr; }
+      .pillars .cell:last-child { grid-column: 1 / -1; }
+      .journey-grid { grid-template-columns: 1fr; gap: 40px; }
+      .foot-inner { grid-template-columns: 1fr 1fr; }
+      .foot-brand { grid-column: 1 / -1; }
+    }
+
+    /* ---------------- Phone: one column, rows read top to bottom ---------------- */
+    @media (max-width: 680px) {
+      :root { --nav-h: 68px; --gutter: 20px; }
+      .nav-logo { height: 44px; }
+      .landscape { width: 260vw; }
+      .copy { padding-top: calc(var(--nav-h) + 32px); }
+      h1 { font-size: 40px; line-height: 44px; }
+      .lede { margin-top: 16px; font-size: 16px; line-height: 24px; }
+      .copy .btn { margin-top: 24px; width: 100%; max-width: 320px; }
+      .brand-moment { height: 210vh; height: 210svh; }
+      .bm-stage { gap: 24px; }
+      .bm-line { font-size: 30px; line-height: 36px; }
+      .band { padding: 64px var(--gutter); }
+      .h2 { font-size: 36px; line-height: 40px; }
+      .lead { font-size: 16px; line-height: 24px; }
+      .sec-head { margin-bottom: 32px; }
+      .pillars, .weeks, .days { grid-template-columns: 1fr; }
+      .pillars .cell:last-child, .days .live { grid-column: auto; }
+      .cell, .pillars .cell, .weeks .cell, .days .cell { grid-row: auto; grid-template-rows: none; display: block; padding: 24px 20px; }
+      .pillars h3 { font-size: 36px; line-height: 40px; }
+      .pillars p { padding-top: 8px; font-size: 16px; line-height: 24px; max-width: none; }
+      .days .cell { display: grid; grid-template-columns: 64px 1fr; column-gap: 12px; padding: 16px 20px; }
+      .days .k { grid-row: 1 / span 3; padding-top: 4px; }
+      .days h3 { padding-top: 0; }
+      .days p { padding-top: 4px; }
+      .days .t { padding-top: 8px; }
+      .weeks h3 { padding-top: 16px; font-size: 24px; line-height: 32px; }
+      .weeks .d { padding-top: 8px; }
+      .join-card { padding: 24px 20px; margin: 0 calc(var(--gutter) * -1); }
+      .grid2 { grid-template-columns: 1fr; }
+      .site-footer { padding-bottom: 112px; }
+    }
+    @media (max-width: 420px) { .nav-actions > .btn { display: none; } }
+
+    /* ---------------- Reduced motion ---------------- */
+    .rm .brand-moment { height: auto; }
+    .rm .bm-stage { position: static; height: auto; padding: 96px var(--gutter); }
+    @media (prefers-reduced-motion: reduce) {
+      .btn, .btn::before, .cell, .cell::before, .mobile-cta, .journey-art img, .nav-links a, .menu-btn .bars::before, .menu-btn .bars::after, .menu-btn .bars span { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="0" height="0" style="position:absolute;display:none;" aria-hidden="true" focusable="false">
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24"><path d="M10 2v2M14 2v2M6 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></symbol>
+    <symbol id="i-split" viewBox="0 0 24 24"><path d="M16 3h5v5M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.17-2.87L3 3M15 9l6-6"/></symbol>
+    <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M15.39 4.39a1 1 0 0 0 1.68-.47 2.5 2.5 0 1 1 3.01 3.01 1 1 0 0 0-.47 1.68l1.68 1.68a2.41 2.41 0 0 1 0 3.42l-1.68 1.68a1 1 0 0 1-1.68-.47 2.5 2.5 0 1 0-3.01 3.01 1 1 0 0 1 .47 1.68l-1.68 1.68a2.41 2.41 0 0 1-3.42 0l-1.68-1.68a1 1 0 0 0-1.68.47 2.5 2.5 0 1 1-3.01-3.01 1 1 0 0 0 .47-1.68l-1.68-1.68a2.41 2.41 0 0 1 0-3.42l1.68-1.68a1 1 0 0 1 1.68.47 2.5 2.5 0 1 0 3.01-3.01 1 1 0 0 1-.47-1.68l1.68-1.68a2.41 2.41 0 0 1 3.42 0z"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.8 5.41a2 2 0 0 1-1.27 1.27L7.76 16.24l1.8-5.41a2 2 0 0 1 1.27-1.27z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chevs" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="m10 9 5 3-5 3z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  </svg>
+
+  <a class="skip" href="#why">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#home" aria-label="ReMind by Her, home"><img class="mark" src="assets/mark.svg" alt="" width="326" height="217" /><img class="wordmark" src="assets/wordmark.png" alt="" width="832" height="263" /></a>
+      <ul class="nav-links">
+        <li><a href="#why">Why ReMind</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#program">The program</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-sm" href="#join">Join ReMind</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu"><span class="bars"><span></span></span></button>
+      </div>
+    </div>
+  </header>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menu" hidden>
+    <a href="#why">Why ReMind</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#program">The program</a>
+    <a class="btn" href="#join">Join ReMind</a>
+  </nav>
+
+
+  <main>
+    <!-- ===================== 1 · HOME (unchanged) ===================== -->
+    <section class="home" id="home" aria-labelledby="home-title">
+      <div class="stage-bg" aria-hidden="true">
+        <div class="landscape"><img src="assets/hero-landscape-crisp.webp" alt="" width="3360" height="1340" fetchpriority="high" /></div>
+      </div>
+      <div class="copy">
+          <h1 id="home-title">Rediscover what<br />your <em>mind</em> can do</h1>
+          <p class="lede">A 6-week, psychologist-led cognitive wellness program for women navigating perimenopause and menopause.</p>
+          <a class="btn" href="#how-it-works" data-scroll>See how it works</a>
+          <p class="byline">A pilot program by MyStree, Bengaluru</p>
+      </div>
+    </section>
+
+    <div class="sheet">
+      <!-- ===================== 1b · BRAND MOMENT (scroll-driven) ===================== -->
+      <section class="brand-moment band-dark" id="brandMoment" aria-label="ReMind by Her: a six-week brain workout for women">
+        <div class="bm-stage">
+          <div class="bm-art" aria-hidden="true"><svg class="bm-part bm-face" viewBox="109.6 1.0 215.4 215.1" style="left:33.620%;top:0.440%;width:66.080%;height:99.603%"><path d="M237.0 214.7C236.5 214.3 236.5 214.0 236.6 213.0C236.7 212.4 236.8 210.5 236.9 208.9C236.9 206.1 237.0 205.8 237.4 205.1C237.9 204.6 238.0 204.1 238.0 202.9C238.0 201.8 238.1 201.3 238.5 200.8C238.8 200.5 239.0 199.8 239.0 199.3C239.0 198.8 239.2 198.2 239.5 197.8C239.8 197.5 240.0 197.0 240.0 196.8C240.0 196.7 240.2 196.1 240.5 195.6C240.8 195.1 241.0 194.4 241.0 194.2C241.0 194.0 241.2 193.5 241.5 193.2C241.8 192.8 242.0 192.4 242.0 192.1C242.0 191.9 242.2 191.4 242.5 191.1C242.8 190.7 243.0 190.3 243.0 190.0C243.0 189.8 243.4 189.1 243.8 188.5C244.2 187.9 244.6 187.2 244.7 186.9C244.8 186.6 245.2 186.2 245.5 185.9C245.8 185.6 246.0 185.3 246.0 185.2C246.0 185.0 247.3 183.0 249.0 180.4C249.6 179.5 250.6 178.0 251.2 177.0C251.8 176.1 252.6 174.9 253.1 174.3C253.6 173.8 254.0 173.1 254.0 172.9C254.0 172.6 254.2 172.2 254.5 171.8C254.8 171.5 255.0 171.0 255.0 170.9C255.0 170.7 255.4 170.0 256.0 169.4C256.5 168.9 257.0 168.1 257.0 167.9C257.0 167.6 257.2 167.1 257.5 166.9C257.8 166.6 258.0 166.2 258.0 165.9C258.0 165.6 258.2 165.1 258.5 164.9C258.8 164.6 259.0 164.1 259.0 163.7C259.0 163.4 259.2 162.9 259.4 162.8C259.6 162.6 259.8 162.3 259.8 162.1C259.8 162.0 260.0 161.5 260.4 161.0C260.7 160.5 261.0 159.9 261.0 159.6C261.0 159.3 261.2 158.9 261.4 158.8C261.6 158.6 261.8 158.2 261.8 158.0C261.8 157.8 262.0 157.2 262.4 156.8C262.7 156.3 263.0 155.6 263.0 155.2C263.0 154.9 263.2 154.4 263.5 154.1C263.8 153.9 264.0 153.5 264.0 153.3C264.0 153.1 264.2 152.5 264.5 152.1C264.8 151.7 265.0 151.0 265.0 150.4C265.0 149.8 265.2 149.2 265.5 148.8C266.2 148.0 266.2 145.8 265.5 145.0C265.3 144.6 265.0 143.9 264.9 143.5C264.6 142.0 262.8 140.1 260.8 139.2C260.4 139.1 260.0 138.8 259.8 138.5C259.6 138.2 259.2 138.0 258.8 138.0C258.4 138.0 257.9 137.8 257.7 137.5C257.4 137.1 256.9 137.0 256.2 137.0C255.5 137.0 255.1 136.9 254.9 136.6C254.7 136.3 254.3 136.2 253.7 136.2C253.1 136.2 252.7 136.1 252.3 135.6C251.9 135.3 251.4 135.0 251.0 135.0C250.6 135.0 250.0 134.7 249.4 134.0C248.8 133.5 248.2 133.0 247.9 133.0C247.7 133.0 247.2 132.8 246.8 132.5C246.5 132.2 246.0 132.0 245.8 132.0C245.2 132.0 239.0 125.7 239.0 125.1C239.0 124.9 238.8 124.6 238.5 124.3C238.3 124.1 238.0 123.6 237.9 123.2C237.8 122.9 237.5 122.4 237.2 122.2C237.0 121.9 236.8 121.6 236.8 121.4C236.8 120.8 235.7 119.0 235.3 118.8C235.1 118.7 235.0 118.3 235.0 117.6C235.0 116.7 234.9 116.4 234.3 116.1C233.7 115.7 233.7 115.7 233.4 116.1C233.2 116.4 232.9 116.8 232.6 117.1C232.3 117.4 232.0 117.7 232.0 117.9C232.0 118.1 231.6 118.5 231.1 118.9C230.5 119.2 229.6 119.8 229.1 120.2L228.0 121.0L223.9 121.0C220.5 121.0 219.8 120.9 219.4 120.6C219.1 120.3 218.5 120.1 217.2 120.1L215.5 120.1L214.4 121.2C213.5 122.1 213.2 122.6 213.2 123.1C213.2 123.6 213.0 124.2 212.6 124.6C212.1 125.2 212.0 125.5 212.0 127.0C212.0 128.3 211.9 128.9 211.5 129.6C211.1 130.2 211.0 130.6 211.2 131.5C211.3 132.4 211.2 132.9 210.6 133.9C210.2 134.7 210.0 135.4 210.0 136.5C210.0 137.4 209.9 138.0 209.6 138.3C209.3 138.6 209.1 139.3 209.0 140.6C209.0 141.8 208.8 142.6 208.5 143.0C208.1 143.4 208.1 143.8 208.2 144.6C208.3 145.4 208.2 145.7 207.8 146.1C207.4 146.4 207.2 146.9 207.2 147.6C207.2 148.5 207.1 148.8 206.6 149.1C206.2 149.4 206.0 149.7 206.0 150.2C206.0 150.6 205.8 151.1 205.6 151.2C205.4 151.4 205.2 151.9 205.2 152.2C205.2 152.6 205.0 153.2 204.6 153.6C204.3 154.0 204.0 154.4 204.0 154.7C204.0 154.9 203.8 155.3 203.5 155.7C203.2 156.0 203.0 156.5 203.0 156.8C203.0 157.1 202.6 157.8 202.0 158.5C201.4 159.2 201.0 159.9 201.0 160.2C201.0 160.5 200.8 160.9 200.5 161.1C200.2 161.4 200.0 161.8 200.0 162.0C200.0 162.3 199.6 162.9 199.1 163.4C198.6 163.9 197.9 164.9 197.6 165.5C197.2 166.1 196.5 167.1 196.0 167.8C195.5 168.4 195.0 169.1 194.9 169.3C194.8 169.6 194.4 169.9 194.0 170.0C193.6 170.2 193.2 170.6 192.9 171.2C192.7 171.8 192.1 172.5 191.7 172.9C191.2 173.2 190.7 173.6 190.5 173.8C188.8 175.7 187.7 176.7 184.8 179.1C183.9 179.8 182.6 180.9 181.9 181.5C181.2 182.0 180.3 182.7 179.9 182.9C179.5 183.1 179.0 183.5 178.9 183.7C178.8 183.8 178.5 184.0 178.1 184.0C177.8 184.0 177.4 184.2 177.2 184.4C177.1 184.6 176.6 184.9 176.1 185.1C175.7 185.3 174.9 185.8 174.4 186.1C173.8 186.4 173.1 186.8 172.9 187.0C172.6 187.1 172.2 187.4 172.0 187.6C171.8 187.8 171.4 188.0 171.1 188.0C170.7 188.0 169.9 188.3 169.3 188.6C168.7 189.0 168.0 189.3 167.8 189.2C167.7 189.2 167.4 189.4 167.3 189.6C167.1 189.8 166.6 190.0 166.1 190.1C165.7 190.2 165.2 190.4 165.0 190.6C164.8 190.9 164.2 191.0 163.2 191.0C162.1 191.0 161.7 191.1 161.3 191.5C161.0 191.9 160.6 192.0 159.2 192.0C157.8 192.0 157.4 192.1 156.8 192.6C156.2 193.2 155.9 193.2 154.2 193.2C153.0 193.2 152.0 193.3 151.2 193.6C150.3 193.9 148.9 194.0 143.8 194.2L137.5 194.3L136.7 193.6C136.0 193.1 135.8 193.0 133.7 193.0C132.0 193.0 131.3 192.9 130.6 192.5C130.0 192.2 129.2 192.0 128.3 192.0C127.3 192.0 126.8 191.9 126.3 191.5C125.9 191.2 125.3 191.0 124.6 191.0C124.0 191.0 123.4 190.8 123.3 190.6C123.1 190.4 122.6 190.2 122.2 190.1C121.7 190.0 121.1 189.7 120.8 189.5C120.4 189.2 119.8 189.0 119.2 189.0C118.6 189.0 118.0 188.8 117.6 188.5C117.2 188.2 116.6 188.0 116.1 188.0C115.6 188.0 115.1 187.8 114.9 187.5C114.6 187.2 114.2 187.0 113.9 187.1C113.7 187.2 113.1 187.1 112.5 186.7C112.0 186.4 111.4 186.0 111.1 185.8C110.8 185.7 110.6 185.3 110.6 184.8C110.6 184.2 110.7 184.1 111.7 184.0C112.5 184.0 112.9 184.1 113.3 184.4C113.7 184.7 114.2 184.9 115.4 184.9C116.6 184.9 117.1 185.0 117.5 185.4C117.9 185.8 118.5 185.9 120.6 185.9C125.2 186.0 129.1 186.0 133.9 186.0C138.4 185.9 138.7 185.8 139.3 185.3C140.0 184.8 140.3 184.8 141.3 184.9C142.2 185.0 143.0 184.9 143.8 184.6C144.4 184.4 145.2 184.1 145.7 184.0C146.1 183.9 146.8 183.6 147.1 183.4C147.5 183.2 148.0 183.0 148.3 183.0C148.7 183.0 149.2 182.8 149.5 182.5C149.9 182.3 150.6 182.0 151.2 181.9C151.8 181.9 152.5 181.6 152.7 181.4C153.0 181.2 153.4 181.0 153.8 181.0C154.1 181.0 154.7 180.8 155.1 180.5C155.4 180.2 155.8 180.0 156.0 180.0C156.1 180.0 156.4 179.7 156.7 179.4C157.0 178.9 157.2 178.8 157.7 178.9C158.2 179.0 158.5 178.9 158.9 178.5C159.1 178.2 159.6 178.0 159.9 178.0C160.2 178.0 160.9 177.5 161.5 176.9C162.1 176.2 162.9 175.8 163.2 175.8C163.5 175.8 164.1 175.3 164.5 174.8C165.0 174.2 165.9 173.5 166.5 173.1C167.1 172.6 167.9 172.0 168.2 171.6C168.6 171.3 168.9 171.0 169.1 171.0C169.4 171.0 175.0 165.4 175.0 165.0C175.0 164.8 175.6 163.9 176.4 163.0C177.2 162.1 178.1 161.0 178.3 160.5C178.6 159.9 179.1 159.3 179.4 159.0C179.7 158.7 180.0 158.2 180.0 158.0C180.0 157.8 180.2 157.4 180.5 157.2C180.7 156.9 181.2 156.1 181.6 155.4C182.0 154.6 182.5 153.9 182.6 153.7C182.8 153.6 183.0 153.2 183.0 153.0C183.0 152.7 183.1 152.5 183.3 152.4C183.6 152.1 184.8 150.3 184.8 149.9C184.8 149.7 185.0 149.3 185.4 148.9C185.8 148.4 186.0 147.9 186.0 147.3C186.0 146.6 186.2 146.2 186.5 145.9C186.8 145.6 186.9 145.2 186.8 144.8C186.7 144.4 186.9 144.1 187.4 143.6C187.9 143.1 188.0 142.8 187.9 142.3C187.8 141.8 187.9 141.5 188.4 141.0C188.8 140.6 189.0 140.1 189.0 139.6C189.0 139.1 189.2 138.4 189.5 138.1C189.9 137.6 190.0 137.2 189.9 136.6C189.7 136.0 189.8 135.7 190.4 135.1C190.9 134.5 191.0 134.3 190.8 133.4C190.7 132.6 190.8 132.4 191.2 132.0C191.5 131.8 191.9 131.1 192.0 130.5C192.2 129.9 192.6 128.9 193.0 128.3C193.4 127.7 193.8 127.1 193.8 126.9C193.8 126.5 193.1 126.4 192.9 126.8C192.8 126.9 192.5 127.0 192.1 127.0C191.8 127.0 191.4 127.2 191.2 127.5C191.0 127.7 190.6 128.0 190.2 128.1C189.8 128.2 189.3 128.5 189.1 128.8C188.9 129.0 188.4 129.2 188.0 129.2C187.6 129.2 187.2 129.4 187.0 129.6C186.9 129.8 186.5 130.0 186.1 130.1C185.7 130.2 185.4 130.5 185.3 130.9C185.3 131.3 184.7 132.1 184.1 132.8C183.5 133.5 183.0 134.1 183.0 134.3C183.0 134.4 182.6 135.0 182.2 135.6C181.7 136.2 181.2 136.9 181.2 137.1C181.1 137.4 180.1 138.5 179.1 139.6C178.0 140.7 177.0 141.9 176.8 142.3C176.5 143.1 174.5 144.8 173.8 144.8C172.6 144.8 172.7 142.8 174.0 141.3C174.7 140.5 175.0 140.0 175.0 139.4C175.0 138.8 175.3 138.3 176.0 137.5C176.6 136.9 177.0 136.2 177.0 135.9C177.0 135.6 177.2 135.1 177.5 134.9C177.8 134.6 178.0 134.2 177.9 134.0C177.9 133.7 178.0 133.2 178.3 132.9C179.0 132.0 178.8 131.1 178.0 131.2C177.6 131.2 176.4 131.0 175.4 130.6C173.8 130.1 173.1 130.0 170.4 130.0C166.6 130.0 162.5 129.3 161.4 128.3C161.0 128.0 160.4 127.8 160.0 127.8C159.0 127.8 158.0 126.5 158.0 125.3C158.0 122.9 160.2 121.6 164.2 121.8C166.4 121.9 166.4 121.9 167.6 120.9C168.3 120.4 169.0 120.0 169.1 120.0C169.3 120.0 169.9 119.5 170.5 118.9C171.1 118.3 171.8 117.7 172.0 117.8C172.2 117.8 173.2 117.1 174.1 116.4C175.1 115.7 176.1 115.0 176.4 114.9C176.7 114.8 177.1 114.6 177.3 114.4C177.4 114.2 177.8 114.0 178.0 114.0C178.3 114.0 178.7 113.8 178.9 113.5C179.2 113.2 179.7 113.0 180.0 113.0C180.4 113.0 181.0 112.8 181.3 112.5C181.7 112.2 182.1 112.0 182.4 112.0C182.6 112.0 183.0 111.7 183.4 111.4C183.7 111.0 184.2 110.7 184.5 110.8C185.5 110.8 185.7 110.8 185.9 110.2C186.0 109.8 186.2 109.7 186.8 109.8C187.3 109.9 187.6 109.9 188.0 109.5C188.3 109.2 188.7 109.0 189.0 109.0C189.2 109.0 189.7 108.8 190.1 108.5C190.4 108.2 190.8 108.0 191.0 108.0C191.4 108.0 196.2 105.5 196.2 105.2C196.2 105.1 196.5 105.0 196.9 105.0C197.2 105.0 197.6 104.8 197.8 104.6C198.0 104.4 198.9 104.0 199.8 103.6C200.7 103.1 201.5 102.7 201.6 102.5C201.7 102.4 202.1 102.1 202.6 101.9C204.0 101.2 204.6 100.8 205.6 99.8C206.2 99.3 207.0 98.7 207.5 98.4C208.0 98.2 208.9 97.5 209.6 96.9C212.3 94.5 212.9 94.0 213.1 94.0C213.6 94.0 219.7 87.5 220.2 86.5C220.5 85.9 221.2 85.0 221.8 84.5C222.3 84.1 222.8 83.5 222.8 83.2C222.8 83.0 223.3 82.2 223.9 81.6C224.5 80.9 225.0 80.1 225.0 79.9C225.0 79.6 225.4 78.9 226.0 78.4C226.6 77.8 227.0 77.2 227.0 76.8C227.0 76.5 227.2 76.2 227.4 76.0C227.7 75.9 227.8 75.5 227.8 75.1C227.8 74.5 227.9 74.2 228.4 73.9C228.8 73.6 229.0 73.3 229.0 72.6C229.0 71.6 230.3 69.5 230.9 69.3C232.0 69.0 232.5 72.2 231.5 73.1C231.1 73.5 231.0 73.9 231.0 74.8C231.0 75.5 230.8 76.4 230.5 77.0C230.2 77.6 230.0 78.4 230.1 79.1C230.1 79.9 230.0 80.3 229.6 80.7C229.2 81.0 229.0 81.5 229.0 81.9C229.0 82.3 228.8 82.8 228.5 83.2C228.2 83.5 228.0 84.0 228.0 84.2C228.0 84.5 227.8 84.9 227.5 85.1C227.2 85.4 227.0 85.9 227.0 86.2C227.0 86.7 226.7 87.2 226.2 87.6C225.8 88.0 225.2 88.9 224.9 89.5C224.7 90.0 223.9 91.0 223.2 91.6C221.8 92.8 220.0 95.2 220.0 95.9C220.0 96.2 220.2 96.6 220.5 96.9C220.8 97.1 221.1 97.6 221.2 97.8C221.3 98.4 221.4 98.5 223.3 100.6C224.0 101.3 224.8 102.1 225.0 102.1C225.7 102.3 226.6 103.9 226.4 104.5C226.1 105.5 225.5 105.7 224.0 105.8C222.7 105.8 219.8 105.2 218.4 104.7C217.6 104.4 215.3 101.9 215.1 101.1C214.9 100.3 213.9 100.0 213.3 100.6C213.0 100.8 212.6 101.0 212.4 101.0C212.2 101.0 211.5 101.5 210.9 102.1C210.2 102.8 209.6 103.2 209.2 103.2C208.8 103.3 208.4 103.4 208.2 103.6C208.1 103.8 207.8 104.0 207.6 104.0C207.4 104.0 207.1 104.3 207.0 104.6C206.8 104.9 206.5 105.3 206.2 105.3C205.5 105.5 205.6 106.0 206.7 106.9C207.8 107.8 207.7 107.8 208.8 109.1C209.2 109.6 209.8 110.0 210.1 110.0C210.4 110.0 210.9 110.2 211.1 110.5C211.4 110.8 211.8 111.0 212.0 111.0C212.2 111.0 212.6 111.2 212.9 111.5C213.1 111.8 213.5 112.0 213.7 112.0C213.9 112.0 214.3 112.2 214.7 112.5C215.0 112.8 215.5 113.0 215.8 113.0C216.1 113.0 216.6 113.2 216.9 113.5C217.3 113.8 217.9 114.0 218.6 114.0C219.2 114.0 219.8 114.2 220.1 114.4C220.5 114.8 221.1 114.9 224.6 114.9L228.6 115.0L229.8 113.8C230.7 112.9 231.0 112.4 231.0 111.8C231.0 110.9 231.8 109.8 232.5 109.8C233.3 109.7 234.0 110.9 234.0 112.3C234.0 113.5 234.4 114.1 235.1 113.9C235.6 113.6 236.7 114.4 237.0 115.3C237.8 117.7 246.6 126.0 248.2 126.0C248.5 126.0 248.9 126.2 249.1 126.5C249.4 126.8 249.9 127.0 250.4 127.0C250.9 127.0 251.6 127.2 251.9 127.5C252.3 127.8 252.9 128.0 253.5 128.0C253.9 128.0 254.6 128.2 254.8 128.4C255.2 128.8 255.7 128.9 257.8 128.8C259.2 128.8 261.6 128.9 263.0 129.1C265.1 129.4 266.3 129.4 269.2 129.2C271.2 129.1 275.1 128.9 277.8 128.9C281.6 128.9 282.8 128.8 283.7 128.4C284.6 128.1 285.6 128.0 288.2 128.0C291.2 128.0 291.8 127.9 292.8 127.4C293.7 127.0 294.3 126.9 297.5 126.9C300.7 126.9 301.2 126.8 301.9 126.4C302.5 125.9 303.0 125.9 305.7 125.9C308.3 125.9 309.0 125.8 309.6 125.4C310.0 125.2 310.7 125.0 311.4 125.0C312.4 125.0 312.9 124.8 314.2 124.0C315.1 123.4 315.9 123.0 316.1 123.0C316.5 123.0 317.8 121.6 318.5 120.5C319.3 119.1 319.2 116.2 318.4 115.0C318.0 114.5 317.8 114.0 317.8 113.9C317.8 113.7 317.0 112.8 316.1 111.8C315.2 110.7 314.3 109.6 314.1 109.1C313.9 108.7 313.6 108.2 313.4 108.0C313.1 107.8 313.0 107.2 313.0 105.4C313.0 102.5 312.9 102.4 310.6 102.0C309.7 101.9 308.5 101.7 308.1 101.5C307.7 101.4 306.8 101.2 306.2 101.1C304.7 100.9 304.4 100.4 305.3 99.6C305.9 98.9 306.1 98.9 309.1 98.9C312.6 98.9 313.0 98.7 313.0 97.2C313.0 96.2 311.1 95.1 309.2 94.9C307.4 94.8 306.0 95.0 305.3 95.6C304.7 96.1 304.4 96.2 304.0 96.1C303.7 96.0 303.2 96.1 302.8 96.4C301.8 97.1 297.3 97.4 292.9 97.1L290.5 96.9L289.2 95.7C288.2 94.7 288.0 94.4 288.0 93.8C288.1 93.0 289.1 92.7 289.7 93.4C290.4 94.0 294.6 94.1 295.3 93.5C295.6 93.3 296.3 93.0 296.9 92.9C298.0 92.8 299.3 92.0 300.0 91.2C300.2 90.9 300.5 90.8 300.8 90.9C301.2 91.0 301.6 90.8 302.4 90.0C302.9 89.5 303.6 89.0 303.9 89.0C304.3 89.0 308.2 85.5 308.2 85.2C308.2 85.1 307.7 84.4 307.0 83.5C305.8 82.0 305.8 82.0 305.8 80.3C305.8 78.9 305.9 78.5 306.4 77.7C306.9 77.0 307.0 76.7 306.8 76.4C306.6 76.2 306.4 76.3 306.0 76.6C305.8 76.8 305.5 77.0 305.3 77.0C305.2 77.0 304.5 77.5 303.8 78.0C301.7 79.7 300.0 79.6 300.0 77.9C300.0 77.0 301.1 75.0 301.5 75.0C301.6 75.0 302.3 74.6 302.9 74.0C303.6 73.5 304.4 73.0 304.8 72.9C305.1 72.8 305.7 72.5 306.0 72.2C306.8 71.6 308.4 71.7 308.8 72.4C308.9 72.6 309.3 72.8 309.5 72.8C310.0 72.8 310.0 72.6 309.9 71.8C309.8 71.0 309.8 70.8 310.2 70.4C310.9 69.8 310.9 69.2 310.1 68.0C309.7 67.3 309.3 67.0 308.9 67.0C308.6 67.0 308.2 66.8 307.9 66.5C307.6 66.2 307.2 66.0 306.6 66.0C306.0 66.0 305.3 65.8 304.9 65.5C304.5 65.2 303.8 65.0 303.5 65.0C303.2 65.0 302.5 64.8 302.1 64.5C301.7 64.2 301.1 64.0 300.7 64.0C300.4 64.0 299.9 63.8 299.7 63.5C299.4 63.2 299.1 63.0 298.9 63.0C298.6 63.0 298.2 62.8 297.8 62.5C297.5 62.2 297.0 62.0 296.7 62.0C296.2 62.0 294.2 60.9 293.7 60.4C293.6 60.2 293.2 60.0 292.9 60.0C292.6 60.0 292.1 59.8 291.9 59.5C291.6 59.2 291.2 59.0 291.0 59.0C290.5 59.0 285.8 54.6 285.8 54.1C285.8 54.0 285.5 53.6 285.2 53.4C284.9 53.0 284.7 52.7 284.8 52.2C284.9 51.7 284.8 51.4 284.4 50.9C283.8 50.3 283.7 50.1 283.9 49.1C284.0 48.3 283.9 47.8 283.5 47.0C283.2 46.4 283.0 45.7 283.0 45.3C283.0 44.9 282.8 44.3 282.5 43.9C282.2 43.6 282.0 43.1 282.0 42.9C282.0 42.7 281.9 42.5 281.7 42.4C281.6 42.3 281.1 41.6 280.7 40.9C280.2 40.2 278.9 38.6 277.8 37.3C276.8 36.1 275.2 34.2 274.4 33.3C273.6 32.3 272.6 31.2 272.1 31.0C271.7 30.7 271.0 30.0 270.5 29.4C270.0 28.8 269.3 28.2 268.9 28.0C268.5 27.9 267.6 27.2 266.8 26.4C266.0 25.7 265.1 25.0 264.8 24.8C264.4 24.6 263.8 24.3 263.4 24.0C263.0 23.7 262.3 23.3 261.9 23.1C261.4 22.9 260.9 22.6 260.8 22.4C260.6 22.2 260.3 22.0 260.1 22.0C259.9 22.0 259.4 21.8 259.1 21.5C258.7 21.2 258.2 21.0 258.0 21.0C257.8 21.0 257.4 20.8 257.2 20.5C256.9 20.2 256.4 20.0 256.0 20.0C255.6 20.0 255.1 19.8 254.9 19.5C254.4 19.0 253.6 18.8 253.4 19.2C253.0 19.8 250.9 21.0 250.3 21.0C249.8 21.0 249.3 21.3 248.5 22.1C247.9 22.7 247.3 23.3 247.2 23.3C246.7 23.2 244.1 26.0 243.1 27.5C242.6 28.2 242.0 28.8 241.7 29.1C241.4 29.3 240.9 29.9 240.5 30.5C240.2 31.1 239.6 32.1 239.2 32.7C238.7 33.2 238.2 34.0 237.9 34.4C237.3 35.4 237.0 36.0 236.4 36.8C236.2 37.2 236.0 37.7 236.0 37.9C236.0 38.3 235.2 39.5 234.4 40.3C234.2 40.5 234.0 40.9 234.0 41.0C234.0 41.2 233.6 41.9 233.0 42.5C232.4 43.2 232.0 43.9 232.0 44.2C232.0 44.5 231.9 44.8 231.7 44.9C231.2 45.2 230.2 46.7 230.2 47.1C230.2 47.3 229.8 48.0 229.2 48.5C228.7 49.0 228.2 49.7 228.2 49.9C228.2 50.2 227.6 51.1 226.7 51.9C225.3 53.4 225.2 53.4 224.6 53.0C223.9 52.6 223.9 52.5 224.0 51.0C224.0 49.8 224.2 49.2 224.5 48.8C225.0 48.4 225.0 48.1 224.9 47.3C224.7 46.4 224.8 46.3 225.4 45.9C226.0 45.5 226.0 45.3 225.9 44.6C225.7 43.8 225.8 43.6 226.4 43.1C226.8 42.7 227.0 42.4 226.9 41.9C226.8 41.5 226.9 41.2 227.2 40.9C227.5 40.6 227.7 40.3 227.8 40.1C227.8 40.0 228.0 39.3 228.4 38.6C228.7 38.0 229.0 37.3 229.0 37.1C229.0 36.9 229.4 36.1 230.0 35.3C230.9 34.1 231.3 33.0 230.8 33.0C230.4 33.0 229.3 34.2 228.5 35.4C228.1 36.0 227.5 36.7 227.2 37.0C226.8 37.3 226.5 37.7 226.5 37.9C226.5 38.1 226.0 38.7 225.4 39.4C224.8 40.0 224.2 40.7 224.2 40.9C224.2 41.1 223.7 41.8 223.1 42.4C222.5 43.1 222.0 43.8 222.0 44.0C222.0 44.3 221.9 44.5 221.8 44.6C221.6 44.7 221.1 45.5 220.6 46.3C219.6 48.1 218.4 49.8 217.0 51.5C216.4 52.2 216.1 52.9 216.1 53.0C216.2 53.2 215.8 53.8 215.2 54.4C214.7 54.9 214.2 55.5 214.2 55.8C214.2 56.1 213.8 56.8 213.2 57.4C212.6 58.1 211.9 59.1 211.6 59.7C211.3 60.5 210.9 60.9 210.3 61.2C209.9 61.3 209.3 61.8 209.2 62.2C209.0 62.6 208.3 63.3 207.7 63.9C207.2 64.4 206.3 65.5 205.7 66.3C204.2 68.7 196.9 76.0 196.0 76.0C195.8 76.0 194.9 76.7 194.0 77.6C193.1 78.5 192.2 79.2 192.0 79.2C191.8 79.2 191.2 79.6 190.8 80.1C190.3 80.6 189.6 81.0 189.3 81.1C188.9 81.2 188.2 81.7 187.6 82.1C187.0 82.6 186.3 83.0 186.1 83.0C185.8 83.0 185.3 83.3 185.0 83.6C184.7 84.1 184.3 84.2 184.0 84.1C183.8 84.0 183.4 84.2 183.1 84.5C182.9 84.8 182.4 85.0 182.1 85.0C181.5 85.0 178.8 86.3 178.5 86.8C178.4 86.9 177.9 87.1 177.3 87.0C176.6 87.0 176.1 87.2 175.7 87.5C175.3 87.8 174.7 88.0 174.3 88.0C173.8 88.0 173.3 88.2 173.1 88.5C172.7 88.9 172.3 89.0 171.4 89.0C170.4 89.0 169.9 89.1 169.4 89.5C169.0 89.8 168.4 90.0 167.6 90.0C166.8 90.0 166.0 90.2 165.4 90.5C164.5 91.0 164.0 91.0 161.1 91.0C158.7 91.0 157.4 91.1 156.0 91.5C154.2 91.9 153.9 91.9 149.5 91.6C147.0 91.3 143.2 91.1 141.2 91.1C138.3 91.1 137.3 91.0 136.0 90.5C134.6 90.0 134.1 90.0 131.9 90.1C129.8 90.3 129.4 90.2 129.0 89.9C128.2 89.1 122.9 88.7 121.3 89.3C120.1 89.7 119.9 89.1 119.9 86.2C120.0 83.8 120.0 83.6 119.5 83.1C118.9 82.6 118.8 81.3 119.4 80.6C119.8 80.0 123.9 79.8 131.5 80.0C138.6 80.2 145.9 79.9 147.2 79.4C147.9 79.1 149.1 79.0 150.5 79.0C152.3 79.0 152.8 78.9 153.3 78.5C153.8 78.1 154.3 78.0 155.7 78.0C157.1 78.0 157.6 77.9 158.1 77.5C158.4 77.2 159.0 77.0 159.5 77.0C160.2 77.0 162.4 76.0 163.5 75.2C163.8 74.9 164.3 74.8 164.7 74.9C165.2 75.0 165.5 74.9 165.9 74.5C166.1 74.2 166.6 74.0 167.1 74.0C167.6 74.0 168.2 73.8 168.5 73.5C168.9 73.3 169.4 73.0 169.7 72.9C170.0 72.8 170.3 72.6 170.5 72.4C170.7 72.2 171.0 72.0 171.2 72.0C171.5 72.0 172.0 71.8 172.3 71.5C172.7 71.2 173.1 71.0 173.3 71.0C173.5 71.0 173.9 70.8 174.1 70.5C174.4 70.2 174.8 70.0 175.1 70.0C175.4 70.0 175.9 69.8 176.2 69.5C176.6 69.2 177.0 69.0 177.1 69.0C177.3 69.0 177.9 68.5 178.5 67.9C179.1 67.2 179.7 66.7 180.1 66.7C180.4 66.8 181.1 66.3 181.9 65.5C182.6 64.8 183.5 64.1 183.9 63.9C184.3 63.7 185.2 63.0 185.9 62.4C186.6 61.7 187.5 61.1 187.9 60.9C188.3 60.7 188.8 60.2 189.0 59.7C189.3 59.1 189.6 58.9 190.0 58.8C190.5 58.7 190.8 58.5 191.0 58.0C191.1 57.6 191.5 57.2 192.0 57.0C192.4 56.8 193.1 56.2 193.4 55.6C193.8 55.1 194.7 54.0 195.4 53.2C196.2 52.5 198.3 50.2 200.3 48.2C202.3 46.1 204.1 44.1 204.3 43.6C204.6 43.1 204.9 42.7 205.1 42.6C205.3 42.5 205.8 42.0 206.2 41.5C207.1 40.3 209.7 37.6 211.6 35.8C212.9 34.6 213.3 34.0 212.8 34.0C212.5 34.0 209.7 36.0 209.3 36.6C209.1 36.8 208.6 37.0 208.2 37.1C207.8 37.2 207.3 37.6 207.1 38.0C206.8 38.4 206.4 38.8 206.1 38.9C205.6 39.1 203.3 40.6 201.2 42.1C200.6 42.6 200.0 43.0 199.8 43.0C199.6 43.0 199.3 43.3 199.1 43.6C198.8 44.1 198.5 44.2 198.1 44.2C197.8 44.1 197.3 44.3 196.5 45.0C195.9 45.5 195.3 46.0 195.0 46.1C194.8 46.2 194.4 46.4 194.2 46.6C194.1 46.8 193.6 47.0 193.3 47.0C192.9 47.0 192.4 47.2 192.1 47.5C191.9 47.8 191.5 48.0 191.4 48.0C191.2 48.0 190.8 48.2 190.4 48.5C190.1 48.8 189.6 49.0 189.3 49.0C189.0 49.0 188.5 49.2 188.2 49.5C187.8 49.8 187.2 50.0 186.8 50.0C186.4 50.0 185.7 50.3 185.3 50.6C184.8 51.0 184.4 51.2 184.1 51.1C183.9 51.0 183.5 51.2 183.0 51.6C182.4 52.2 182.1 52.3 181.4 52.2C180.7 52.1 180.4 52.2 180.0 52.6C179.6 53.1 179.1 53.3 178.4 53.3C177.6 53.2 177.3 53.4 177.0 53.8C176.7 54.3 176.6 54.3 175.4 54.2C174.3 54.0 173.9 54.1 173.5 54.5C173.1 54.8 172.3 55.0 171.1 55.1C170.0 55.1 169.1 55.3 168.7 55.6C168.3 55.9 167.6 56.0 165.8 56.0C164.5 56.0 162.7 56.2 161.9 56.4C159.6 57.0 154.5 56.1 155.4 55.3C155.9 54.9 159.9 54.0 161.8 53.9C163.2 53.9 163.8 53.7 164.2 53.4C164.5 53.2 165.1 53.0 165.8 53.0C166.5 53.0 167.2 52.8 167.6 52.5C168.0 52.2 168.6 52.0 168.9 52.0C169.2 52.0 169.7 51.7 170.0 51.4C170.4 51.0 170.7 50.9 171.0 50.9C171.4 51.0 171.7 50.9 172.2 50.4C172.5 50.0 173.0 49.8 173.3 49.8C174.0 49.8 177.1 48.2 177.9 47.5C178.2 47.3 178.7 47.0 179.0 46.8C180.2 46.2 182.4 45.0 182.9 44.5C183.7 43.8 185.0 43.0 185.2 43.0C185.3 43.0 185.9 42.5 186.6 41.9C187.2 41.3 187.9 40.7 188.1 40.7C188.3 40.7 189.1 40.1 189.9 39.4C190.7 38.7 191.7 38.0 192.0 37.9C192.4 37.8 193.0 37.4 193.4 36.9C193.8 36.5 194.3 35.9 194.5 35.7C195.0 35.1 196.9 33.6 198.3 32.6C199.1 32.2 199.9 31.4 200.3 30.9C200.7 30.4 201.6 29.7 202.3 29.4C203.7 28.7 205.2 27.5 205.2 27.0C205.2 26.9 205.6 26.7 205.9 26.7C206.4 26.7 206.9 26.5 207.2 26.1C207.6 25.7 208.3 25.2 208.9 25.0C209.4 24.8 210.2 24.2 210.6 23.8C211.0 23.4 211.6 23.0 211.9 23.0C212.2 23.0 212.6 22.8 212.9 22.5C213.1 22.2 213.6 22.0 213.9 22.0C214.2 22.0 214.6 21.8 214.9 21.5C215.1 21.2 215.6 21.0 215.9 21.0C216.2 21.0 216.7 20.8 217.1 20.5C217.4 20.2 217.9 20.0 218.2 20.0C218.5 20.0 218.9 19.8 219.1 19.5C219.3 19.2 219.6 19.0 220.2 19.0C220.6 19.0 221.2 18.8 221.6 18.5C221.9 18.2 222.6 18.0 223.1 18.0C223.6 18.0 224.2 17.8 224.6 17.5C224.9 17.2 225.5 17.0 225.9 17.0C226.3 17.0 227.0 16.8 227.3 16.5C227.7 16.2 228.3 16.0 229.0 16.0C229.5 16.0 230.6 15.8 231.3 15.5C232.4 15.0 233.2 14.9 236.6 14.9C239.0 14.9 240.8 14.7 241.2 14.5C241.6 14.3 242.1 14.4 243.7 14.6C244.9 14.9 246.2 15.0 247.2 14.9C248.7 14.7 249.0 14.8 249.7 15.4C250.4 15.8 250.8 16.0 251.3 15.9C251.9 15.7 252.1 15.8 253.0 16.9C253.3 17.3 253.3 17.3 253.7 16.9C254.1 16.5 254.1 16.4 253.6 16.0C253.3 15.8 253.0 15.3 253.0 15.0C253.0 14.8 252.8 14.1 252.5 13.6C251.7 12.3 248.5 9.0 248.0 9.0C247.7 9.0 247.4 8.8 247.3 8.6C246.9 8.2 244.6 7.0 244.1 7.0C243.9 7.0 243.4 6.8 242.9 6.5C242.5 6.2 241.9 6.0 241.7 6.0C241.5 6.0 241.1 5.8 240.9 5.5C240.5 5.1 240.1 5.0 237.8 5.0C236.0 5.0 234.9 4.9 234.5 4.6C234.1 4.4 233.5 4.3 232.9 4.4C231.7 4.6 231.0 4.0 231.4 3.3C232.0 2.4 233.8 2.0 238.0 2.0C241.8 1.9 242.2 1.9 243.1 2.5C243.8 2.8 244.6 3.0 245.3 3.0C246.0 3.0 246.8 3.2 247.3 3.5C247.8 3.8 248.4 4.0 248.6 4.0C248.9 4.0 249.4 4.2 249.6 4.3C249.9 4.5 250.5 4.8 250.9 4.9C251.3 5.0 251.9 5.2 252.2 5.5C252.5 5.8 253.0 6.0 253.3 6.0C253.5 6.0 253.8 6.2 254.0 6.4C254.2 6.6 254.7 6.9 255.1 7.1C256.3 7.6 259.9 11.1 260.1 12.0C260.2 12.4 260.4 12.8 260.6 13.0C260.8 13.2 261.0 13.6 261.0 14.0C261.0 14.3 261.2 14.9 261.4 15.3C261.7 15.6 261.9 16.6 262.0 17.4C262.2 19.4 262.6 19.8 265.1 21.1C266.1 21.6 267.1 22.3 267.3 22.5C267.6 22.8 267.9 23.0 268.0 23.0C268.1 23.0 269.3 23.8 270.5 24.8C271.8 25.8 273.2 26.8 273.5 27.0C274.6 27.8 283.8 37.2 284.4 38.3C284.8 38.9 285.3 39.6 285.5 39.9C285.8 40.2 286.0 40.7 286.0 41.0C286.0 41.3 286.3 41.9 286.7 42.3C287.3 43.1 287.3 43.2 287.2 45.2C287.0 47.2 287.0 47.3 287.7 47.9C288.2 48.4 288.3 48.6 288.2 49.5C288.1 50.2 288.2 50.6 288.5 50.9C288.8 51.1 289.0 51.6 289.0 51.9C289.0 52.3 289.7 53.2 291.1 54.6C293.1 56.6 293.6 57.0 295.4 57.9C295.8 58.1 296.3 58.4 296.5 58.6C296.7 58.8 297.1 59.0 297.5 59.0C297.9 59.0 298.5 59.2 298.8 59.5C299.2 59.8 299.5 60.0 299.6 60.0C299.7 60.0 300.1 60.2 300.4 60.5C300.8 60.8 301.4 61.0 301.9 61.0C302.3 61.0 302.8 61.2 303.1 61.5C303.3 61.8 303.8 62.0 304.4 62.0C304.9 62.0 305.6 62.2 305.9 62.5C306.3 62.8 306.9 63.0 307.6 63.0C308.2 63.0 308.9 63.2 309.4 63.5C309.8 63.8 310.5 64.0 310.9 64.0C311.8 64.0 314.0 66.2 314.0 67.1C314.0 67.5 314.2 68.5 314.4 69.4C315.1 71.8 314.6 73.1 312.1 75.6C311.1 76.7 310.2 77.7 310.2 77.9C310.2 78.0 310.0 78.5 309.7 78.9C308.9 79.9 308.9 81.3 309.7 82.0C310.0 82.3 310.2 82.7 310.2 82.9C310.2 83.1 311.0 83.8 311.8 84.5C314.5 86.6 314.9 87.2 315.1 88.8C315.2 90.1 315.2 90.4 314.6 91.4C313.8 92.8 313.9 93.8 315.0 94.5C315.4 94.8 316.1 95.9 316.7 97.1C317.8 99.3 317.8 99.3 317.4 100.3C317.2 100.8 317.0 101.6 317.0 102.0C317.0 102.4 316.8 102.9 316.5 103.1C315.9 103.6 315.9 106.2 316.6 106.9C316.8 107.2 317.0 107.7 317.1 108.0C317.2 108.4 317.8 109.1 318.5 109.6C319.2 110.1 319.8 110.6 319.8 110.7C319.7 110.9 320.2 111.5 320.8 112.2C322.7 114.3 323.0 114.9 323.0 116.3C323.0 117.2 323.1 117.7 323.5 118.2C324.1 118.9 324.2 120.5 323.7 121.4C323.5 121.8 323.2 122.5 323.2 123.0C323.1 123.6 322.7 124.3 322.1 124.8C321.6 125.2 321.3 125.9 321.3 126.1C321.2 126.7 319.1 128.5 317.7 129.1C317.2 129.3 316.7 129.6 316.6 129.7C316.5 129.9 316.3 130.0 316.0 130.0C315.7 130.0 315.2 130.3 314.8 130.6C314.4 131.0 313.7 131.2 313.3 131.2C312.9 131.2 312.4 131.5 312.1 131.8C311.7 132.2 311.4 132.3 310.5 132.1C309.5 132.0 309.2 132.1 308.7 132.5C308.3 132.8 307.7 133.0 306.9 133.0C306.2 133.0 305.6 133.2 305.2 133.5C304.8 133.8 304.3 134.0 303.9 134.0C303.6 134.0 303.0 134.3 302.5 134.6C301.9 135.1 301.5 135.2 300.9 135.1C300.3 135.0 299.9 135.1 299.5 135.5C299.0 135.8 298.4 136.0 297.8 136.0C297.2 136.0 296.6 136.2 296.2 136.5C295.8 136.8 295.2 137.0 294.6 137.0C294.0 137.0 293.6 137.2 293.2 137.6C292.8 138.1 292.5 138.2 292.0 138.1C291.6 138.0 291.1 138.1 290.7 138.5C290.3 138.8 289.7 139.0 289.3 139.0C288.9 139.0 288.3 139.2 287.9 139.5C287.6 139.8 287.1 140.0 286.9 140.0C286.7 140.0 286.3 140.2 285.9 140.5C285.6 140.8 285.1 141.0 284.9 141.0C284.7 141.0 284.0 141.4 283.4 142.0C282.8 142.5 282.0 143.0 281.6 143.1C281.3 143.2 281.0 143.4 281.0 143.5C281.0 143.6 280.5 144.0 279.9 144.3C279.2 144.6 277.9 145.7 276.5 147.1C274.4 149.3 273.6 150.4 271.6 153.5C271.2 154.2 270.7 154.9 270.4 155.2C270.2 155.4 269.6 156.5 269.0 157.6C268.4 158.7 267.7 159.9 267.5 160.1C267.2 160.4 267.0 160.9 267.0 161.3C267.0 161.7 266.8 162.1 266.6 162.2C266.4 162.4 266.2 162.7 266.2 162.9C266.2 163.0 266.0 163.5 265.7 163.8C264.9 164.8 264.0 166.7 264.0 167.3C264.0 167.5 263.9 167.8 263.8 167.8C263.5 167.8 262.6 169.1 262.1 170.3C262.0 170.6 261.6 171.0 261.4 171.2C261.2 171.4 261.0 171.8 261.0 172.1C261.0 172.4 260.8 172.8 260.6 173.0C260.4 173.2 260.1 173.7 259.9 174.2C259.7 174.6 259.0 175.6 258.3 176.3C257.6 177.0 256.8 178.1 256.5 178.6C256.2 179.2 255.5 180.1 255.0 180.7C254.4 181.3 254.0 181.9 254.0 182.1C254.0 182.4 253.4 183.2 252.6 184.0C251.9 184.9 251.2 185.7 251.2 186.0C251.2 186.2 250.6 187.1 249.8 187.9C248.9 188.7 248.2 189.6 248.1 190.0C248.0 190.4 247.8 190.9 247.5 191.1C247.2 191.4 247.0 191.8 247.0 192.0C247.0 192.2 246.8 192.6 246.6 192.8C246.4 193.0 246.1 193.3 246.0 193.6C245.7 194.1 245.4 194.7 244.7 195.8C244.5 196.1 244.3 196.7 244.2 197.1C244.1 197.5 243.8 198.1 243.5 198.5C243.2 198.8 243.0 199.3 243.0 199.7C243.0 200.0 242.8 200.6 242.5 200.9C242.2 201.3 242.0 201.8 242.0 202.1C242.0 202.3 241.8 202.8 241.5 203.2C241.2 203.5 241.0 204.1 241.0 204.5C241.0 204.9 240.8 205.7 240.5 206.2C240.2 206.7 240.0 207.6 240.0 208.3C240.0 209.0 239.8 209.8 239.5 210.3C239.1 210.9 239.0 211.6 239.0 212.6C239.0 213.8 238.9 214.3 238.6 214.5C237.8 215.2 237.5 215.3 237.0 214.7Z"/></svg><svg class="bm-part bm-strand" viewBox="260.0 49.0 26.4 16.3" style="--s:0.160;--dx:-33.2;left:79.755%;top:22.696%;width:8.103%;height:7.555%"><path d="M268.9 64.2C267.5 64.1 265.9 63.8 265.2 63.6C264.6 63.4 263.7 63.2 263.2 63.1C261.9 62.9 261.0 62.3 261.0 61.7C261.0 61.0 262.8 60.1 264.4 59.8C264.9 59.8 265.8 59.5 266.3 59.4C266.9 59.1 268.3 59.0 270.1 59.0C272.7 59.0 273.0 59.0 273.7 58.4C274.2 58.1 274.7 57.8 274.9 57.9C275.4 58.1 276.0 57.6 276.0 57.0C276.0 56.7 275.7 56.3 275.4 56.1C274.8 55.7 274.7 55.5 274.8 55.0C274.9 54.5 274.8 54.1 274.5 53.7C272.2 50.7 273.3 48.6 275.8 51.2C276.5 51.9 277.0 52.6 277.0 52.9C277.0 53.2 277.2 53.6 277.4 53.7C277.6 53.9 278.0 54.6 278.4 55.2C278.8 55.9 279.6 57.0 280.3 57.7L281.6 59.0L282.4 58.6C283.5 58.2 284.8 58.6 285.3 59.6C285.6 60.3 285.3 61.0 284.6 61.0C284.4 61.0 282.6 62.2 280.9 63.6C280.5 64.0 279.8 64.1 278.0 64.1C276.7 64.1 274.7 64.2 273.5 64.3C272.3 64.4 270.2 64.3 268.9 64.2Z"/></svg><svg class="bm-part bm-strand" viewBox="252.0 37.3 28.2 16.7" style="--s:0.217;--dx:-29.4;left:77.308%;top:17.269%;width:8.642%;height:7.731%"><path d="M253.2 52.8C252.9 52.5 253.0 51.3 253.4 51.0C253.6 50.8 253.8 50.4 253.8 50.0C253.8 49.5 253.9 49.2 254.1 49.1C254.3 49.0 255.1 48.1 255.8 47.2C257.5 44.7 259.2 43.0 260.4 42.3C260.9 41.9 261.5 41.5 261.6 41.3C261.7 41.1 261.9 41.0 262.1 41.0C262.3 41.0 262.7 40.8 263.1 40.5C263.4 40.2 264.0 40.0 264.3 40.0C264.6 40.0 265.2 39.8 265.6 39.5C266.2 39.1 266.8 39.0 268.0 39.0C268.9 39.0 269.9 38.8 270.2 38.6C270.7 38.4 271.6 38.3 273.0 38.3C274.4 38.3 275.3 38.4 275.8 38.6C276.1 38.8 276.7 39.0 277.0 39.0C277.4 39.0 278.0 39.3 278.4 39.8C279.1 40.5 279.1 40.7 279.2 42.5C279.2 44.6 279.2 44.7 278.0 45.3C277.0 45.8 275.8 45.9 275.1 45.4C274.9 45.2 274.4 45.0 274.2 45.0C273.9 45.0 273.5 44.8 273.2 44.6C272.5 44.0 265.7 43.9 264.6 44.5C264.2 44.8 263.6 45.0 263.2 45.1C262.3 45.4 259.5 47.8 257.0 50.5C255.2 52.5 254.6 53.0 254.0 53.0C253.6 53.0 253.3 52.9 253.2 52.8Z"/></svg><svg class="bm-part bm-strand" viewBox="162.3 50.1 73.7 53.9" style="--s:0.273;--dx:4.9;left:49.784%;top:23.185%;width:22.606%;height:24.961%"><path d="M165.0 102.4C163.0 101.7 162.8 101.2 164.2 100.5C164.9 100.2 165.7 100.0 166.9 100.0C168.1 100.0 168.8 99.9 169.7 99.4C170.7 98.9 171.2 98.8 171.9 98.9C172.6 99.0 172.9 99.0 173.5 98.5C174.0 98.2 174.6 98.0 175.3 98.0C176.1 98.0 176.6 97.9 176.9 97.5C177.1 97.2 177.6 97.0 178.0 97.0C178.4 97.0 179.0 96.8 179.3 96.5C179.7 96.2 180.3 96.0 180.7 96.0C181.1 96.0 181.6 95.8 181.9 95.5C182.2 95.2 182.6 95.0 183.3 95.0C184.2 95.0 185.0 94.5 185.0 94.0C185.0 93.8 185.3 93.7 185.7 93.8C186.3 94.0 186.6 93.9 187.0 93.4C187.3 93.0 187.7 92.8 188.1 92.8C188.5 92.8 188.8 92.6 189.0 92.2C189.1 92.0 189.4 91.8 189.6 91.8C190.1 91.8 192.9 90.3 193.3 89.8C193.5 89.6 193.5 89.4 193.1 89.0C192.7 88.5 192.7 88.4 193.0 87.8C193.2 87.4 193.7 87.1 194.2 87.0C194.6 86.8 195.1 86.6 195.2 86.4C195.4 86.2 195.7 86.0 195.9 86.0C196.4 86.0 198.2 85.0 199.5 84.0C200.1 83.6 200.9 83.1 201.3 83.0C201.7 82.8 202.0 82.6 202.1 82.4C202.2 82.2 202.5 82.0 202.8 82.0C203.3 82.0 203.8 81.6 204.4 80.9C205.0 80.2 205.7 79.8 206.0 79.8C206.3 79.8 206.8 79.4 207.3 78.9C207.7 78.4 208.5 77.8 209.1 77.5C209.7 77.2 210.5 76.6 210.9 76.1C211.2 75.6 211.8 75.1 212.2 74.9C212.6 74.7 213.8 73.6 215.0 72.4C216.2 71.2 218.4 68.9 220.1 67.3C221.7 65.7 223.0 64.3 223.0 64.1C223.0 63.9 223.3 63.6 223.7 63.3C224.6 62.8 226.8 60.5 226.8 60.1C226.8 59.9 227.3 59.2 227.9 58.5C228.5 57.9 229.0 57.2 229.0 57.1C229.0 56.9 229.4 56.2 230.0 55.5C230.6 54.8 231.0 54.1 231.0 53.9C231.0 53.7 231.3 53.3 231.8 53.0C232.2 52.7 232.6 52.2 232.8 51.9C233.1 51.0 233.7 50.8 234.4 51.5C235.1 52.2 235.2 52.7 234.6 53.3C234.4 53.5 234.1 54.3 234.1 54.9C234.0 55.6 233.7 56.4 233.5 56.7C233.2 57.1 233.0 57.6 233.1 58.1C233.1 58.5 233.0 58.9 232.7 59.0C232.4 59.2 232.2 59.5 232.2 59.9C232.2 60.2 232.0 60.8 231.6 61.1C231.1 61.5 231.0 61.9 231.1 62.2C231.2 62.6 231.0 63.0 230.6 63.4C230.3 63.7 230.0 64.2 230.0 64.4C230.0 64.6 229.8 65.1 229.5 65.4C229.2 65.8 229.0 66.2 229.0 66.5C229.0 66.7 228.8 67.1 228.6 67.4C228.4 67.6 228.2 68.0 228.2 68.3C228.2 68.5 228.0 68.9 227.8 69.0C227.6 69.2 227.1 69.9 226.7 70.5C226.3 71.1 225.8 71.8 225.5 72.1C225.2 72.4 225.0 72.8 225.0 73.1C225.0 73.3 224.6 74.0 224.1 74.6C223.6 75.2 223.2 75.8 223.2 75.9C223.2 76.1 222.9 76.5 222.5 77.0C222.0 77.5 221.2 78.6 220.6 79.5C220.0 80.4 218.8 81.9 217.9 82.8C217.0 83.6 215.9 84.9 215.6 85.5C214.9 86.8 211.3 90.5 209.5 91.6C207.0 93.2 206.3 93.8 205.7 94.5C205.3 95.1 205.0 95.2 204.4 95.2C203.9 95.2 203.4 95.4 203.2 95.6C203.1 95.8 202.7 96.0 202.4 96.0C201.8 96.0 201.0 96.6 201.0 97.0C201.0 97.2 200.7 97.3 200.3 97.2C199.5 97.0 199.2 97.2 198.9 97.8C198.8 98.2 198.6 98.3 197.6 98.1C196.6 98.0 196.5 98.0 196.1 98.6C195.7 99.2 195.6 99.3 194.6 99.1C193.7 99.0 193.5 99.0 193.0 99.5C192.6 99.9 192.1 100.0 190.8 100.1C189.9 100.1 188.8 100.3 188.4 100.5C188.0 100.8 186.7 101.0 185.5 101.1C184.3 101.2 182.9 101.4 182.2 101.6C181.6 101.8 179.7 102.0 178.0 102.1C176.3 102.2 174.3 102.4 173.5 102.6C171.4 103.2 167.0 103.1 165.0 102.4Z"/></svg><svg class="bm-part bm-strand" viewBox="113.2 5.8 113.0 44.4" style="--s:0.330;--dx:25.5;left:34.724%;top:2.697%;width:34.675%;height:20.544%"><path d="M139.8 49.0C135.4 48.9 134.2 48.8 133.4 48.4C132.9 48.2 131.9 48.0 130.9 48.0C129.9 48.0 129.2 47.9 129.0 47.7C128.9 47.5 128.1 47.2 127.3 47.1C126.6 47.0 125.6 46.7 125.2 46.5C124.7 46.2 124.1 46.0 123.7 46.0C123.3 46.0 122.7 45.8 122.3 45.5C122.0 45.2 121.4 45.0 121.1 45.0C120.5 45.0 119.5 44.6 117.5 43.5C116.9 43.2 116.2 43.0 115.9 43.0C115.3 43.0 114.2 42.0 114.2 41.4C114.2 40.4 116.1 40.0 117.6 40.6C119.0 41.2 138.4 41.0 139.2 40.4C139.6 40.2 140.3 40.0 140.9 40.0C141.4 40.0 142.4 39.8 143.0 39.5C143.6 39.2 144.5 39.0 145.0 39.0C145.6 39.0 146.2 38.8 146.6 38.5C146.9 38.2 147.6 38.0 148.1 38.0C148.5 38.0 149.2 37.8 149.5 37.5C149.9 37.3 150.5 37.0 151.0 36.9C151.4 36.8 152.2 36.3 152.6 35.9C153.1 35.4 153.7 35.0 154.0 35.0C154.3 35.0 154.7 34.8 154.9 34.5C155.2 34.2 155.6 34.0 155.9 34.0C156.1 34.0 156.9 33.5 157.5 33.0C158.1 32.5 158.7 32.0 158.9 32.0C159.1 32.0 159.8 31.5 160.5 30.9C161.2 30.2 161.8 29.8 162.0 29.9C162.2 30.0 163.0 29.4 163.9 28.5C164.7 27.7 165.7 26.8 166.2 26.6C166.6 26.4 167.5 25.8 168.2 25.2C168.8 24.6 169.9 23.8 170.5 23.4C171.1 23.0 171.8 22.4 172.1 22.2C172.3 21.9 172.6 21.7 172.8 21.8C173.0 21.8 174.0 21.1 175.9 19.8C176.5 19.3 177.1 19.0 177.2 19.0C177.3 19.0 177.6 18.8 177.8 18.5C178.1 18.3 178.9 17.8 179.7 17.4C180.5 17.0 181.7 16.3 182.3 15.8C183.0 15.4 183.7 15.0 183.9 15.0C184.2 15.0 184.7 14.8 185.1 14.5C185.5 14.2 186.1 14.0 186.4 14.0C186.7 14.0 187.2 13.8 187.6 13.5C187.9 13.2 188.5 13.0 188.8 13.0C189.1 13.0 189.6 12.8 189.9 12.5C190.2 12.1 190.6 12.0 191.4 12.0C192.3 12.0 192.6 11.9 192.9 11.4C193.2 10.8 193.4 10.8 194.1 10.9C194.8 11.0 195.0 10.9 195.6 10.4C196.1 9.7 196.3 9.7 197.4 9.8C198.4 10.0 198.6 9.9 199.1 9.4C199.6 8.8 199.7 8.7 201.1 8.9C202.3 9.0 202.6 9.0 203.4 8.5C204.1 8.1 204.7 8.0 206.3 8.0C207.5 8.0 208.5 7.9 208.9 7.7C210.8 6.7 222.2 6.5 224.1 7.4C225.0 7.8 225.5 8.8 225.1 9.2C224.2 10.0 222.6 10.3 219.5 10.1C216.5 10.0 216.3 10.0 215.0 10.6C214.0 11.1 213.4 11.2 212.7 11.1C212.0 11.0 211.7 11.1 211.1 11.6C210.4 12.1 210.0 12.2 208.9 12.2C208.0 12.2 207.5 12.4 207.2 12.6C207.1 12.8 206.6 13.0 206.1 13.0C205.6 13.0 205.1 13.2 204.9 13.5C204.6 13.8 204.2 14.0 203.9 14.0C203.6 14.0 203.1 14.2 202.9 14.5C202.6 14.8 202.2 15.0 201.9 15.0C201.6 15.0 201.0 15.2 200.7 15.5C200.3 15.8 199.9 16.0 199.7 16.0C199.5 16.0 199.0 16.2 198.7 16.5C198.3 16.8 197.9 17.0 197.7 17.0C197.5 17.0 197.1 17.2 196.9 17.5C196.6 17.8 196.2 18.0 196.0 18.0C195.8 18.0 195.4 18.2 195.1 18.5C194.9 18.8 194.4 19.0 194.1 19.0C193.8 19.0 193.4 19.2 193.3 19.4C193.1 19.6 192.4 20.0 191.8 20.4C189.8 21.6 187.2 23.3 187.1 23.7C187.0 23.9 186.7 24.0 186.3 24.0C185.9 24.0 185.1 24.6 183.6 26.0C182.5 27.1 181.0 28.4 180.4 28.9C179.8 29.4 179.1 30.1 178.9 30.4C178.7 30.7 178.3 31.0 178.1 31.0C177.8 31.0 176.4 32.2 175.0 33.6C173.6 35.1 172.2 36.2 172.0 36.2C171.8 36.2 170.4 37.3 169.0 38.6C167.6 39.9 166.2 41.0 166.0 41.0C165.9 41.0 165.2 41.4 164.5 41.9C162.6 43.5 161.8 44.0 161.2 44.0C160.8 44.0 160.4 44.2 160.1 44.5C159.9 44.8 159.5 45.0 159.3 45.0C159.0 45.0 158.4 45.2 157.9 45.5C157.4 45.8 156.8 46.0 156.7 46.0C156.5 46.0 156.0 46.2 155.7 46.5C155.3 46.8 154.7 47.0 154.1 47.0C153.6 47.0 152.6 47.2 152.0 47.5C151.4 47.8 150.4 48.0 149.6 48.0C148.7 48.0 148.0 48.2 147.1 48.6C146.5 49.0 145.8 49.2 145.5 49.2C145.3 49.2 142.7 49.1 139.8 49.0Z"/></svg><svg class="bm-part bm-strand" viewBox="40.0 156.9 103.2 25.4" style="--s:0.387;--dx:67.4;left:12.257%;top:72.639%;width:31.671%;height:11.743%"><path d="M41.2 181.1C40.6 180.5 41.1 179.5 42.9 177.4C43.9 176.2 44.8 175.1 44.8 174.9C44.8 174.4 50.0 169.4 51.6 168.3C52.5 167.7 53.4 167.0 53.8 166.6C54.1 166.3 54.8 165.7 55.4 165.4C55.9 165.2 56.6 164.7 56.9 164.5C57.4 164.0 61.8 161.8 62.2 161.8C62.3 161.8 62.6 161.6 62.8 161.4C62.9 161.2 63.4 161.0 63.8 161.0C64.3 161.0 65.0 160.8 65.4 160.5C65.8 160.2 66.5 160.0 67.0 160.0C67.6 160.0 68.2 159.8 68.8 159.4C69.5 158.8 69.8 158.7 70.9 158.9C72.0 159.0 72.5 158.9 73.6 158.5C74.8 157.9 75.1 157.9 82.8 157.9C90.2 157.9 90.7 158.0 91.8 158.5C92.4 158.8 93.3 159.0 93.9 159.0C94.4 159.0 95.3 159.2 95.9 159.5C96.4 159.8 97.2 160.0 97.7 160.0C98.2 160.0 98.8 160.2 99.2 160.5C99.5 160.8 100.1 161.0 100.4 161.0C100.7 161.0 101.2 161.2 101.5 161.5C101.8 161.8 102.3 162.0 102.6 162.0C102.9 162.0 103.3 162.1 103.4 162.2C103.6 162.5 106.5 164.0 106.9 164.0C107.1 164.0 107.6 164.2 107.9 164.5C108.3 164.8 108.8 165.0 109.1 165.0C109.3 165.0 109.8 165.2 110.2 165.5C110.5 165.8 111.0 166.0 111.2 166.0C111.6 166.0 112.7 166.5 114.8 167.5C115.4 167.8 116.0 168.0 116.3 167.9C116.6 167.7 117.0 167.9 117.5 168.4C118.1 169.0 118.4 169.0 119.1 168.9C119.9 168.8 120.2 168.8 120.8 169.4C121.6 170.0 121.7 170.1 123.3 169.9C124.8 169.8 125.0 169.8 125.8 170.4L126.6 171.0L132.6 171.0C138.5 170.9 138.5 170.9 138.9 170.3C139.3 169.8 139.5 169.7 140.6 169.8C142.1 170.0 142.4 170.3 142.1 171.2C141.9 171.7 141.7 171.9 141.2 172.0C140.8 172.0 140.4 172.2 140.1 172.5C139.8 172.9 139.3 173.0 138.6 173.0C137.7 173.0 137.4 173.1 137.1 173.6C136.7 174.2 136.5 174.3 136.0 174.2C135.5 174.1 135.1 174.2 134.5 174.6C133.9 175.2 133.6 175.2 132.8 175.1C131.9 175.0 131.7 175.0 131.1 175.6C130.5 176.3 130.4 176.3 128.8 176.1C127.3 176.0 127.0 176.0 126.4 176.5L125.6 177.1L117.1 177.0C109.2 176.9 108.6 176.9 107.6 176.4C106.9 176.0 106.4 176.0 105.3 176.1C104.2 176.2 104.0 176.2 103.3 175.6C102.7 175.1 102.5 175.0 101.5 175.2C100.4 175.3 100.2 175.3 99.6 174.6C99.1 174.1 98.9 174.0 98.2 174.1C97.5 174.3 97.3 174.2 96.9 173.6C96.6 173.1 96.3 173.0 95.3 173.0C94.6 173.0 94.0 172.8 93.6 172.5C93.2 172.2 92.6 172.0 92.1 172.0C91.6 172.0 90.9 171.8 90.6 171.5C90.2 171.2 89.6 171.0 89.0 171.0C88.5 171.0 87.8 170.8 87.4 170.5C86.9 170.2 86.2 170.0 85.3 170.0C84.3 170.0 83.8 169.9 83.3 169.5C82.8 169.1 82.3 169.0 80.0 169.0C78.0 169.0 77.1 168.9 76.4 168.6C75.1 168.1 71.7 168.1 68.8 168.6C67.6 168.8 65.7 169.0 64.5 169.0C62.6 169.0 62.3 169.1 61.5 169.6C60.8 170.1 60.5 170.2 59.8 170.1C59.0 170.0 56.0 171.1 55.6 171.7C55.6 171.8 55.1 172.0 54.5 172.1C54.0 172.2 53.4 172.4 53.2 172.6C53.1 172.8 52.8 173.0 52.6 173.0C52.4 173.0 51.8 173.4 51.2 174.0C50.6 174.6 49.9 175.0 49.8 175.0C49.6 175.0 49.3 175.3 49.1 175.6C48.8 176.0 48.5 176.2 48.0 176.2C47.6 176.2 46.8 176.9 44.9 178.8C42.5 181.0 41.7 181.6 41.2 181.1Z"/></svg><svg class="bm-part bm-strand" viewBox="14.8 140.0 73.6 42.7" style="--s:0.443;--dx:91.3;left:4.545%;top:64.813%;width:22.578%;height:19.785%"><path d="M16.0 181.6C15.6 181.1 15.9 178.6 16.5 177.6C16.8 177.2 17.0 176.5 17.0 176.1C17.0 175.6 17.2 175.1 17.5 174.9C17.8 174.6 18.0 174.1 18.0 173.8C18.0 173.5 18.2 172.9 18.5 172.6C18.8 172.2 19.0 171.6 19.0 171.2C19.0 170.8 19.1 170.4 19.3 170.3C19.7 170.1 20.8 168.1 20.8 167.7C20.8 167.5 20.9 167.1 21.1 166.9C21.9 165.8 22.7 164.5 22.9 164.0C23.0 163.6 23.7 162.7 24.4 162.0C25.1 161.2 25.8 160.3 25.8 160.1C25.8 159.6 35.2 150.0 35.6 150.0C35.9 150.0 37.7 148.8 38.7 147.8C39.2 147.4 39.8 147.0 40.0 147.0C40.2 147.0 40.6 146.8 40.9 146.5C41.1 146.2 41.6 146.0 41.9 146.0C42.2 146.0 42.7 145.8 43.1 145.5C43.4 145.2 43.9 145.0 44.2 145.0C44.5 145.0 45.0 144.8 45.3 144.5C45.7 144.2 46.1 144.0 46.4 144.0C46.6 144.0 47.1 143.8 47.6 143.6C48.0 143.3 49.0 143.1 49.8 143.0C50.6 142.9 51.5 142.6 51.7 142.4C52.1 142.1 52.7 142.0 54.3 142.0C55.6 142.0 57.0 141.8 58.2 141.5C60.4 140.9 63.9 140.8 65.5 141.4C66.1 141.6 67.6 141.9 68.9 142.0C70.1 142.1 71.6 142.4 72.1 142.6C72.7 142.8 73.7 143.0 74.4 143.0C75.1 143.0 75.8 143.2 76.0 143.4C76.3 143.6 77.0 143.9 77.7 143.9C78.3 144.0 79.1 144.3 79.5 144.5C80.0 144.9 80.3 145.0 81.1 144.9C82.1 144.7 82.3 144.8 82.8 145.4C83.2 145.9 83.5 146.0 84.1 145.9C84.8 145.7 85.0 145.8 85.3 146.2C85.5 146.5 86.0 146.9 86.5 147.0C87.3 147.3 87.7 148.1 87.2 148.6C86.8 149.2 84.7 149.1 83.6 148.5C82.7 148.0 82.2 148.0 75.6 148.0C69.2 148.0 68.5 148.0 67.2 148.5C66.4 148.8 65.1 149.0 64.3 149.0C63.2 149.0 62.6 149.1 62.2 149.5C61.8 149.8 61.0 150.0 59.6 150.1C58.1 150.2 57.5 150.4 57.1 150.8C56.6 151.2 56.3 151.3 55.2 151.1C54.0 151.0 53.7 151.0 53.3 151.5C52.9 152.0 52.5 152.1 51.3 152.1C50.3 152.1 49.7 152.3 49.3 152.6C49.1 152.8 48.7 153.0 48.5 153.0C48.2 153.0 47.8 153.2 47.4 153.5C47.1 153.8 46.5 154.0 46.2 154.0C45.8 154.0 45.4 154.2 45.2 154.5C45.0 154.8 44.6 155.0 44.2 155.0C43.8 155.0 43.3 155.2 43.1 155.5C42.8 155.8 42.3 156.0 41.7 156.0C41.2 156.0 40.6 156.2 40.2 156.5C39.8 156.8 39.4 157.0 39.3 157.0C39.1 157.0 38.4 157.5 37.8 158.1C37.1 158.7 36.4 159.3 36.1 159.3C35.8 159.3 35.1 159.7 34.5 160.1C33.9 160.6 32.8 161.4 32.1 161.8C30.5 163.0 23.3 170.3 23.1 171.1C23.0 171.4 22.5 172.1 22.0 172.6C21.4 173.2 21.0 173.8 21.0 174.1C21.0 174.4 20.8 174.9 20.5 175.1C20.2 175.4 20.0 175.8 20.0 176.1C20.0 176.5 19.5 177.5 18.7 179.0C18.6 179.2 18.4 179.7 18.2 180.0C17.8 181.1 16.4 182.1 16.0 181.6Z"/></svg><svg class="bm-part bm-strand" viewBox="0.9 94.0 67.2 53.3" style="--s:0.500;--dx:97.0;left:0.281%;top:43.519%;width:20.608%;height:24.660%"><path d="M2.2 146.0C1.7 145.4 1.9 143.5 2.5 142.9C2.8 142.5 3.0 142.2 2.8 141.9C2.7 141.6 2.9 141.3 3.3 140.8C3.7 140.5 4.0 140.0 4.0 139.8C4.0 139.5 4.2 139.1 4.5 138.9C4.8 138.6 5.0 138.2 4.9 138.0C4.8 137.7 4.9 137.3 5.3 137.0C5.7 136.6 5.9 136.3 5.8 135.9C5.7 135.5 5.9 135.2 6.4 134.9C6.7 134.7 7.0 134.3 7.0 134.1C7.0 133.6 7.8 132.0 8.9 130.5C9.3 129.9 9.8 129.0 9.9 128.6C10.4 127.3 12.7 124.5 16.5 120.6C17.2 119.9 17.8 119.1 17.8 118.8C17.9 118.3 18.1 118.1 18.7 117.9C19.2 117.7 20.6 116.6 22.5 114.7C24.2 113.1 25.7 111.8 25.8 111.8C25.9 111.8 26.3 111.6 26.7 111.3C27.3 110.9 27.9 110.5 30.8 107.9C31.4 107.4 32.0 107.0 32.2 107.0C32.3 107.0 32.6 106.8 32.9 106.5C33.1 106.2 33.5 106.0 33.7 106.0C34.0 106.0 35.4 105.2 38.7 103.1C39.6 102.5 40.5 102.0 40.9 102.0C41.2 102.0 41.7 101.8 42.1 101.5C42.4 101.2 42.8 101.0 43.0 101.0C43.1 101.0 43.7 100.8 44.3 100.5C44.8 100.2 45.7 99.8 46.2 99.5C46.8 99.2 47.5 99.0 47.8 99.0C48.2 99.0 48.8 98.7 49.2 98.4C49.8 97.9 50.1 97.8 50.9 97.9C51.8 98.0 52.0 98.0 52.6 97.4C53.1 96.8 53.3 96.7 53.9 96.8C54.3 97.0 54.8 96.8 55.4 96.5C56.0 96.3 57.1 96.0 58.0 95.9C58.9 95.9 60.0 95.6 60.4 95.4C61.0 95.1 61.9 95.0 63.4 95.0C65.6 95.0 65.7 95.0 66.4 95.8L67.1 96.5L66.6 97.5C66.1 98.3 66.0 98.8 66.0 101.2C66.0 104.3 65.8 104.8 63.9 105.7C63.1 106.1 62.6 106.2 61.7 106.1C60.9 106.0 60.4 106.1 59.7 106.4C59.3 106.6 58.1 106.9 57.1 107.0C55.8 107.1 55.1 107.3 54.7 107.6C54.3 108.0 53.9 108.1 52.9 108.1C51.9 108.0 51.4 108.1 51.0 108.5C50.6 108.8 50.1 109.0 49.2 109.0C48.4 109.0 47.9 109.2 47.4 109.5C47.1 109.8 46.5 110.0 46.2 110.0C45.5 110.0 45.1 110.2 44.9 110.8C44.8 111.2 44.6 111.3 44.0 111.1C43.5 111.0 43.1 111.1 42.5 111.6C42.0 112.1 41.6 112.2 41.2 112.1C40.7 112.0 40.4 112.1 40.1 112.5C39.8 112.8 39.4 113.0 39.1 113.0C38.8 113.0 38.3 113.2 38.1 113.5C37.8 113.8 37.4 114.0 37.1 114.0C36.8 114.0 36.3 114.2 36.1 114.5C35.8 114.7 35.2 115.0 34.8 115.1C33.9 115.3 32.2 116.3 31.9 116.7C31.8 116.9 31.5 117.0 31.2 117.0C30.9 117.0 30.2 117.5 29.6 118.1C28.9 118.9 28.3 119.2 27.9 119.2C27.6 119.2 27.2 119.4 27.1 119.5C27.0 119.6 26.6 119.9 26.2 120.1C25.7 120.3 24.6 121.1 23.7 122.0C22.8 122.8 21.6 123.8 21.1 124.1C19.6 125.0 11.0 133.5 11.0 134.0C11.0 134.3 10.4 135.2 9.6 135.9C8.8 136.7 7.9 138.0 7.5 138.8C7.2 139.5 6.5 140.7 6.1 141.3C5.6 142.0 5.2 142.7 5.2 143.0C5.2 143.3 5.0 143.7 4.6 144.0C4.3 144.3 4.0 144.8 4.0 145.0C4.0 145.9 2.5 146.7 2.2 146.0Z"/></svg><svg class="bm-part bm-pink" viewBox="57.3 55.6 58.8 67.4" style="left:17.570%;top:25.718%;width:18.050%;height:31.204%"><path d="M88.5 121.5C86.4 120.8 84.5 119.0 84.2 117.5C83.7 114.9 84.2 113.4 85.9 111.4C86.8 110.4 87.0 109.6 86.3 109.4C86.1 109.4 83.3 109.3 80.2 109.3C71.8 109.2 71.3 109.2 70.1 107.9C69.1 106.9 69.1 106.9 68.9 104.4C68.7 102.1 68.8 101.8 69.3 100.9C70.1 99.2 70.4 93.8 69.7 92.4C69.4 91.8 67.6 91.9 66.6 92.5C66.0 92.9 65.5 93.0 63.8 93.0L61.6 93.0L60.4 91.7C57.0 88.1 57.8 82.4 62.0 80.4C63.8 79.6 67.0 80.2 68.6 81.8C69.5 82.6 70.0 82.7 70.4 82.2C70.7 81.8 71.1 77.9 71.1 74.0C71.2 72.6 71.2 71.0 71.2 70.5C71.2 69.7 71.5 69.3 72.3 68.4L73.4 67.2L75.6 67.3C77.7 67.3 78.7 67.4 82.2 68.0C87.5 69.0 89.8 68.4 88.4 66.3C87.5 64.8 87.2 63.9 87.2 61.9L87.1 60.0L88.3 58.8C89.1 58.0 90.0 57.4 91.0 57.0C92.5 56.4 92.5 56.4 95.8 57.0C96.5 57.1 97.2 57.5 98.3 58.5C99.7 59.8 100.0 60.1 100.4 61.5C100.9 63.6 100.7 64.8 99.5 66.7C98.7 67.9 98.5 68.3 98.7 68.6C98.9 68.8 100.3 68.9 104.1 69.0C109.8 69.0 112.5 69.5 113.6 70.5C114.9 71.7 115.0 72.4 115.1 77.4C115.2 82.6 115.0 84.0 114.0 85.4C113.2 86.6 112.4 86.8 111.3 85.9C109.6 84.5 108.6 84.0 107.6 84.0C103.1 84.0 101.3 90.6 104.9 93.7C106.1 94.8 107.3 94.8 109.3 93.7C111.8 92.5 112.8 92.7 114.0 94.6C114.5 95.4 114.5 95.7 114.4 99.2C114.3 101.9 114.0 103.5 113.6 105.2C113.3 106.4 113.0 107.7 113.0 108.1C113.0 109.1 111.1 110.2 109.3 110.3C106.8 110.4 104.0 110.3 100.6 110.1C97.1 110.0 96.2 110.1 96.2 111.0C96.2 111.2 96.5 111.6 96.8 111.9C98.0 113.0 98.4 115.8 97.5 117.5C97.3 118.0 96.9 118.7 96.8 119.0C96.3 119.9 94.8 120.9 92.7 121.5C90.5 122.1 90.3 122.1 88.5 121.5Z"/></svg><svg class="bm-part bm-dark" viewBox="97.3 104.9 66.8 59.1" style="left:29.847%;top:48.587%;width:20.491%;height:27.339%"><path d="M139.1 162.6C138.4 162.4 136.9 162.2 135.6 162.1C133.9 162.0 133.3 161.8 132.9 161.5C132.2 160.8 130.6 160.8 129.5 161.6C128.7 162.2 128.5 162.3 126.8 162.1C125.8 162.0 124.4 161.8 123.7 161.5C122.8 161.1 121.9 161.0 120.3 161.0C118.6 161.0 118.0 160.9 117.5 160.6C117.1 160.3 116.3 160.1 115.2 160.1C113.8 160.0 113.3 159.9 113.0 159.5C112.6 159.1 112.2 159.0 111.0 159.1C109.9 159.1 109.4 159.0 109.1 158.7C108.8 158.5 108.2 158.2 107.7 158.1C106.8 157.9 106.0 157.3 106.0 156.8C106.0 156.6 105.8 156.0 105.5 155.6L104.9 154.7L105.4 153.6C105.9 152.8 105.9 152.3 105.8 151.0C105.7 149.7 105.7 149.4 106.3 148.7C107.0 147.7 107.1 146.1 106.8 143.2C106.7 141.6 106.6 141.4 106.1 141.3C105.8 141.3 105.4 141.4 105.3 141.6C104.7 142.3 102.2 142.1 101.0 141.4C100.0 140.7 99.0 139.5 99.0 138.9C99.0 138.8 98.8 138.1 98.6 137.5C98.2 136.3 98.2 136.2 98.6 134.8C99.5 132.0 99.9 131.4 101.3 130.6C103.0 129.8 105.3 129.7 106.4 130.4C107.2 131.0 108.7 131.4 108.8 131.1C108.8 131.0 108.8 129.7 108.9 128.2C109.0 126.4 109.2 124.9 109.5 123.9C109.8 122.9 110.0 121.7 110.0 120.5C110.0 119.1 110.1 118.5 110.4 118.3C110.6 118.1 110.8 117.6 110.9 117.2C111.2 115.8 111.8 115.7 116.2 115.9C119.3 116.0 120.2 116.1 120.8 116.5C121.4 116.9 122.1 117.0 123.2 117.0C124.3 117.0 125.1 117.2 125.4 117.4C126.1 117.9 127.2 117.8 127.6 117.2C128.0 116.7 128.0 116.6 127.5 116.1C127.3 115.9 127.0 115.3 126.9 114.9C126.8 114.5 126.5 114.0 126.2 113.8C125.5 113.3 125.5 111.4 126.2 111.0C126.6 110.8 126.8 110.4 126.9 109.8C127.1 108.8 128.4 107.0 129.1 107.0C129.3 107.0 129.7 106.8 130.0 106.5C130.5 106.1 131.2 106.0 133.2 106.0C135.6 105.9 135.8 105.9 136.2 106.4C136.5 106.7 137.0 107.0 137.2 107.0C137.8 107.0 140.2 109.4 140.2 110.0C140.2 110.2 140.4 110.6 140.6 110.9C141.5 112.1 140.7 115.0 139.1 116.5C137.8 117.7 137.7 118.8 138.9 118.8C139.2 118.8 140.2 119.0 141.0 119.4C142.4 119.9 142.8 120.0 146.2 120.0C149.4 120.0 150.0 120.1 150.6 120.5C151.0 120.8 151.7 121.0 152.1 121.0C153.0 121.0 153.7 121.6 154.4 122.9C154.7 123.7 154.7 123.9 154.4 124.9C154.1 125.6 154.0 126.9 154.0 128.7C154.0 131.1 154.0 131.6 153.5 132.5C153.1 133.3 153.0 133.9 153.0 135.2C153.1 136.8 152.8 138.0 152.2 138.0C151.9 138.0 151.9 138.7 152.2 138.9C152.3 138.9 152.9 138.5 153.5 138.0C154.1 137.5 154.9 137.0 155.2 137.0C155.4 137.0 156.1 136.7 156.6 136.4C157.1 136.0 157.8 135.8 158.1 135.8C158.4 135.8 159.0 136.0 159.5 136.4C160.0 136.7 160.5 137.0 160.6 137.0C160.8 137.0 161.4 137.5 162.0 138.1L163.1 139.2L163.1 142.3L163.1 145.4L162.0 146.6C160.2 148.6 159.6 149.0 157.8 149.0C156.7 149.0 156.2 148.9 155.9 148.6C155.7 148.4 155.2 148.1 154.8 148.0C154.3 147.9 153.9 147.5 153.4 146.5C152.6 144.8 151.9 144.1 151.4 144.3C151.1 144.5 151.1 144.6 151.6 145.7C152.4 147.1 152.4 147.9 151.7 149.0C151.3 149.7 151.2 150.3 151.1 152.2C151.1 154.1 151.0 154.6 150.6 155.0C150.2 155.5 150.1 156.0 150.0 158.3L150.0 161.1L149.1 162.1L148.1 163.0L144.3 163.0C141.8 162.9 139.9 162.8 139.1 162.6ZM146.9 145.5C147.1 145.2 147.5 145.0 147.6 145.0C147.8 145.0 148.2 144.8 148.6 144.5C149.2 144.0 149.2 143.9 149.1 142.3C148.9 140.6 149.0 140.5 149.7 139.6C150.6 138.6 150.7 138.2 150.0 138.2C149.7 138.2 149.1 137.8 148.5 137.2C147.7 136.2 147.5 136.2 146.0 136.1L144.5 136.1L143.2 137.3C142.6 138.0 142.0 138.7 142.0 138.9C142.0 139.0 141.8 139.3 141.6 139.5C141.1 140.0 141.1 142.1 141.8 142.9C142.0 143.3 142.2 143.7 142.2 143.9C142.2 144.3 143.2 145.5 143.8 145.8C144.9 146.2 146.4 146.0 146.9 145.5ZM117.1 141.1C117.7 140.7 118.0 140.3 118.0 139.9C118.0 139.5 118.2 139.0 118.5 138.7C119.2 138.1 119.1 136.1 118.4 135.3C118.2 135.1 118.0 134.5 117.9 134.1C117.6 132.9 116.4 132.2 114.7 132.3C113.1 132.4 112.6 132.9 113.4 133.8C113.9 134.3 114.0 134.7 114.0 136.1C114.0 137.6 113.9 137.9 113.1 138.9C112.0 140.4 112.0 140.5 113.4 141.3C114.8 142.1 115.6 142.0 117.1 141.1Z"/></svg></div>
+          <p class="bm-line">A six-week brain workout for women.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 2 · UNDERSTAND IT. PRACTISE IT. LIVE IT. (white) ===================== -->
+      <section class="band" id="why" aria-labelledby="why-title">
+        <div class="wrap">
+          <h2 class="sr-only" id="why-title">Why ReMind</h2>
+          <ol class="grid pillars">
+            <li class="cell"><h3>Understand it</h3><p>Two short videos a week explain what is changing in your brain, and what helps.</p></li>
+            <li class="cell"><h3>Practise it</h3><p>Quick games on WhatsApp. Reply by text, emoji or voice note.</p></li>
+            <li class="cell"><h3>Live it</h3><p>A private worksheet, then a small group session with a psychologist.</p></li>
+          </ol>
+        </div>
+      </section>
+
+    <!-- ===================== 3 · HOW IT WORKS (burgundy) ===================== -->
+    <section class="band band-dark solid" id="how-it-works" aria-labelledby="how-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <h2 class="h2" id="how-title">A week that fits into your chai break</h2>
+          <p class="lead">One topic a week, in small daily moments. About 5 to 10 minutes a day, all on WhatsApp.</p>
+        </header>
+        <ol class="grid days">
+          <li class="cell"><span class="k">Day 1</span><h3>Make sense of it</h3><p>A short video on what is changing, and why</p><span class="t">5 to 6 min</span></li>
+          <li class="cell"><span class="k">Day 2</span><h3>Play with it</h3><p>A quick, playful game</p><span class="t">2 to 5 min</span></li>
+          <li class="cell"><span class="k">Day 3</span><h3>Find what helps</h3><p>A video with one simple strategy</p><span class="t">5 to 6 min</span></li>
+          <li class="cell"><span class="k">Day 4</span><h3>Try it out</h3><p>A game to practise the strategy</p><span class="t">2 to 5 min</span></li>
+          <li class="cell"><span class="k">Day 5</span><h3>Make it yours</h3><p>A private worksheet for your own day</p><span class="t">Your own time</span></li>
+          <li class="cell"><span class="k">Day 6</span><h3>Pause</h3><p>Rest, or catch up on anything you missed</p><span class="t">Rest day</span></li>
+          <li class="cell live"><span class="k">Day 7</span><h3>Come together</h3><p>A small group session led by your psychologist</p><span class="t">45 min, live</span></li>
+        </ol>
+      </div>
+    </section>
+    </div>
+
+    <!-- ===================== 4 · THE PROGRAM (white) ===================== -->
+    <section class="band solid" id="program" aria-labelledby="program-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <h2 class="h2" id="program-title">Six weeks. Six parts of you.</h2>
+          <p class="lead">Each week takes one part of everyday life and gives you a few simple ways to handle it.</p>
+        </header>
+        <ol class="grid weeks">
+          <li class="cell"><span class="k">Week 1</span><h3>Memory</h3><p class="q">“Where did I keep my keys?”</p><p class="d">Simple systems that make remembering easier.</p></li>
+          <li class="cell"><span class="k">Week 2</span><h3>Decisions</h3><p class="q">“Why is choosing dinner so hard?”</p><p class="d">Make choices without feeling overwhelmed.</p></li>
+          <li class="cell"><span class="k">Week 3</span><h3>Habits</h3><p class="q">“Starting again on Monday… again.”</p><p class="d">Understand your habits and build ones that stick.</p></li>
+          <li class="cell"><span class="k">Week 4</span><h3>Stress</h3><p class="q">“When everything feels urgent.”</p><p class="d">Practical ways to respond to everyday pressure.</p></li>
+          <li class="cell"><span class="k">Week 5</span><h3>Boundaries</h3><p class="q">“Saying no without the guilt.”</p><p class="d">Put your needs into words, kindly and clearly.</p></li>
+          <li class="cell"><span class="k">Week 6</span><h3>Sleep and body</h3><p class="q">“Wide awake at 3 a.m.”</p><p class="d">Small routines for better sleep and wellbeing.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== 5 · JOURNEY (burgundy) ===================== -->
+    <section class="band band-dark solid" id="journeyBanner" aria-labelledby="journey-title">
+      <div class="wrap journey-grid">
+        <div>
+          <h2 class="h2" id="journey-title">Start your mindful training journey</h2>
+          <p class="lead">5 to 10 minutes a day, built around real life. Led by licensed psychologists, on WhatsApp.</p>
+          <a class="btn btn-invert" href="#join">Begin your six week journey</a>
+        </div>
+        <figure class="journey-art"><img src="assets/remind-viaduct-duotone.webp" alt="" width="1376" height="768" loading="lazy" /></figure>
+      </div>
+    </section>
+
+    <!-- ===================== 6 · JOIN (white page, burgundy form) ===================== -->
+    <section class="band solid" id="join" aria-labelledby="join-title">
+      <div class="wrap join-grid">
+        <div class="join-copy">
+          <h2 class="h2" id="join-title">Come as you are.<br />Leave a little lighter.</h2>
+          <p class="lead">Join the next ReMind group. Signing up takes a minute, there are no fees, and your first one on one consultation is on us.</p>
+          <ul class="promise">
+            <li>Practical strategies to support memory and focus</li>
+            <li>Calmer ways to handle stress and overwhelm</li>
+            <li>A warm community of women going through the same changes</li>
+          </ul>
+          <p class="join-help">Questions first? Call us on <a href="tel:+916366573772">+91 63665 73772</a></p>
+        </div>
+        <div class="join-card" id="joinCard">
+          <form id="joinForm" novalidate>
+              <div class="join-card-head"><h3>Sign up</h3></div>
+              <p class="join-card-sub">Your first one-on-one consultation is on us. We’ll arrange it on WhatsApp after you sign up.</p>
+              <div class="grid2">
+                <div class="field full">
+                  <label for="f-name">Full name</label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" required />
+                  <span class="err" aria-live="polite"></span>
+                </div>
+
+                <div class="field full">
+                  <label for="f-phone">WhatsApp number</label>
+                  <div class="phone">
+                    <span class="cc" aria-hidden="true">+91</span>
+                    <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="16" pattern="[6-9][0-9]{9}" required aria-describedby="f-phone-hint" />
+                  </div>
+                  <span class="hint" id="f-phone-hint">Your 10-digit Indian mobile number. We’ll use it to add you to the group.</span>
+                  <span class="err" aria-live="polite"></span>
+                </div>
+
+                <div class="field full">
+                  <label for="f-email">Email <i>(optional)</i></label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" />
+                  <span class="err" aria-live="polite"></span>
+                </div>
+
+                <div class="field">
+                  <label for="f-age">Age range</label>
+                  <select id="f-age" name="age" required>
+                    <option value="" selected disabled>Choose one</option>
+                    <option>Under 40</option><option>40–44</option><option>45–49</option><option>50–54</option><option>55–59</option><option>60+</option>
+                  </select>
+                  <span class="err" aria-live="polite"></span>
+                </div>
+
+                <div class="field">
+                  <label for="f-city">City</label>
+                  <input id="f-city" name="city" type="text" autocomplete="address-level2" required />
+                  <span class="err" aria-live="polite"></span>
+                </div>
+
+                <div class="field">
+                  <label for="f-lang">Preferred session language <i>(optional)</i></label>
+                  <select id="f-lang" name="language">
+                    <option value="" selected>Choose one</option>
+                    <option>English</option><option>Hindi</option><option>Kannada</option><option>Other</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="f-src">How did you hear about us? <i>(optional)</i></label>
+                  <select id="f-src" name="source">
+                    <option value="" selected>Choose one</option>
+                    <option>Instagram</option><option>WhatsApp</option><option>A friend or family member</option><option>MyStree clinic</option><option>My doctor</option><option>Other</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label class="consent"><input id="f-consent" name="consent" type="checkbox" required /><span class="box" aria-hidden="true"></span><span>I agree to be added to the ReMind WhatsApp community. I understand other members may see my number.</span></label>
+                  <span class="err" aria-live="polite"></span>
+                </div>
+
+                <!-- spam trap: real people never see or fill this -->
+                <div class="trap" aria-hidden="true">
+                  <label for="f-website">Leave this field empty</label>
+                  <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+                </div>
+                <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_term" /><input type="hidden" name="utm_content" />
+              </div>
+
+              <p class="form-err" id="formErr" role="alert" hidden></p>
+              <button class="btn btn-invert submit" type="submit">Join ReMind</button>
+            </form>
+
+          <div class="done" id="joinDone" hidden tabindex="-1">
+              <span class="done-mark" aria-hidden="true">✓</span>
+              <h3>You’re in.</h3>
+              <p>Thank you. We’ll add you to the next ReMind group on WhatsApp and share your first video soon.</p>
+            </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <img src="assets/remind-logo-2026-white.png" alt="ReMind by Her" width="849" height="526" loading="lazy" />
+        <p>A six week cognitive wellness program by MyStree, Bengaluru, led by psychologists.</p>
+      </div>
+      <nav class="foot-links" aria-labelledby="foot-explore">
+        <h2 class="foot-h" id="foot-explore">Explore</h2>
+        <a href="#why">Why ReMind</a><a href="#how-it-works">How it works</a><a href="#program">The program</a>
+      </nav>
+      <div class="foot-contact">
+        <h2 class="foot-h">Talk to us</h2>
+        <a href="tel:+916366573772">+91 63665 73772</a>
+        <a href="mailto:info@mystree.org">info@mystree.org</a>
+        <a href="#join">Join ReMind</a>
+      </div>
+    </div>
+    <p class="fine">ReMind is a wellness program by MyStree. It does not diagnose, treat or prevent any medical condition, including dementia. WhatsApp support is not an emergency service. If you need urgent help, please contact a doctor or local emergency services.</p>
+    <p class="foot-copy">© <span id="year">2026</span> MyStree</p>
+  </footer>
+
+  <div class="mobile-cta" id="mobileCta" aria-hidden="true">
+    <p>Free · on WhatsApp</p>
+    <a class="btn btn-sm" href="#join" tabindex="-1">Join ReMind</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const instant = new URLSearchParams(location.search).has("instant"); // QA captures
+    const $ = (id) => document.getElementById(id);
+    const nav = $("nav"), home = $("home");
+
+    let lenis = null;
+    if (!reduce && !instant && window.Lenis) lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
+    if (lenis) { const loop = (t) => { lenis.raf(t); requestAnimationFrame(loop); }; requestAnimationFrame(loop); }
+    document.querySelectorAll("a[href^='#']").forEach((a) => a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href"); if (!id || id === "#") return;
+      const el = document.querySelector(id); if (!el) return;
+      e.preventDefault();
+      const y = id === "#home" ? 0 : el.getBoundingClientRect().top + scrollY - nav.offsetHeight + 1;
+      lenis ? lenis.scrollTo(y, { duration: 1.2 }) : scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+    }));
+
+    /* Nav: solid white once the content reaches it, or while the menu is open */
+    const sheet = document.querySelector(".sheet"), menuBtn = $("menuBtn"), menu = $("mobileMenu");
+    const onNav = () => nav.classList.toggle("scrolled", scrollY > 8 || !menu.hidden);
+    onNav(); addEventListener("scroll", onNav, { passive: true });
+
+    const setMenu = (open) => {
+      menu.hidden = !open;
+      menuBtn.setAttribute("aria-expanded", String(open));
+      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      onNav();
+    };
+    menuBtn.addEventListener("click", () => setMenu(menu.hidden));
+    menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+    addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+    document.addEventListener("click", (e) => { if (!menu.hidden && !menu.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false); });
+
+    /* Mobile sticky CTA: after the hero; hidden while the form or footer is on screen */
+    const cta = $("mobileCta"), joinSec = $("join"), footer = document.querySelector(".site-footer");
+    let ctaTick = false;
+    const inView = (el) => { const r = el.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; };
+    const onCta = () => {
+      ctaTick = false;
+      const show = sheet.getBoundingClientRect().top < innerHeight * 0.4 && !inView(joinSec) && !inView(footer);
+      cta.classList.toggle("show", show);
+      cta.setAttribute("aria-hidden", String(!show));
+      cta.querySelector("a").tabIndex = show ? 0 : -1;
+    };
+    addEventListener("scroll", () => { if (!ctaTick) { ctaTick = true; requestAnimationFrame(onCta); } }, { passive: true });
+    onCta();
+    $("year").textContent = new Date().getFullYear();
+
+    /* Brand moment: scroll position -> --p (0..1). Positions are measured once (and again on resize);
+       each frame is one subtraction and, only when the value changed, one style write. */
+    const bm = $("brandMoment");
+    if (bm && !reduce) {
+      let top = 0, span = 1, vh = innerHeight, last = -1;
+      const measure = () => {
+        vh = innerHeight;
+        top = bm.getBoundingClientRect().top + scrollY;
+        span = vh * 0.55 + (bm.offsetHeight - vh) * 0.85;     // finishes with a beat of stillness
+      };
+      const update = (y) => {
+        const p = Math.round(Math.min(1, Math.max(0, (y + vh * 0.55 - top) / span)) * 1000) / 1000;
+        if (p !== last) { last = p; bm.style.setProperty("--p", p); }
+      };
+      measure(); update(scrollY);
+      new ResizeObserver(() => { measure(); update(scrollY); }).observe(document.body);
+      if (lenis) lenis.on("scroll", (e) => update(e.scroll));        // same frame as the smooth scroll
+      let tick = false;                                                // touch / native scrolling
+      addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(() => { tick = false; update(scrollY); }); } }, { passive: true });
+    }
+
+    /* ---------- Join form (front end only for now) ---------- */
+    const form = $("joinForm"), done = $("joinDone");
+    const RULES = {
+      name: (v) => v.trim().length >= 2 || "Please enter your full name.",
+      phone: (v) => /^[6-9]\d{9}$/.test(v) || "Please enter a valid 10-digit mobile number.",
+      email: (v) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "Please check your email address.",
+      age: (v) => !!v || "Please choose your age range.",
+      city: (v) => v.trim().length >= 2 || "Please enter your city.",
+    };
+    const check = (el) => {
+      const field = el.closest(".field"), err = field && field.querySelector(".err");
+      let msg = true;
+      if (el.name === "consent") msg = el.checked || "Please agree so we can add you to the group.";
+      else if (RULES[el.name]) msg = RULES[el.name](el.value);
+      const ok = msg === true;
+      field?.classList.toggle("bad", !ok);
+      el.setAttribute("aria-invalid", String(!ok));
+      if (err) err.textContent = ok ? "" : msg;
+      return ok;
+    };
+    // Accept "+91 98765 43210", "098765 43210" or "9876543210": keep the 10-digit number.
+    const normPhone = (v) => { let d = v.replace(/\D/g, ""); if (d.length > 10 && d.startsWith("91")) d = d.slice(2); if (d.length > 10 && d.startsWith("0")) d = d.slice(1); return d.replace(/^0+(?=[6-9]\d{9}$)/, "").slice(0, 10); };
+    $("f-phone").addEventListener("input", (e) => { const d = e.target.value.replace(/\D/g, ""); if (d.length <= 10) e.target.value = d; });
+    $("f-phone").addEventListener("blur", (e) => { e.target.value = normPhone(e.target.value); });
+    $("f-phone").addEventListener("paste", (e) => { e.preventDefault(); e.target.value = normPhone((e.clipboardData || window.clipboardData).getData("text")); });
+    const qs = new URLSearchParams(location.search);
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach((k) => { const v = qs.get(k); if (v) form.elements[k].value = v.slice(0, 200); });
+    form.querySelectorAll("input, select").forEach((el) => {
+      el.addEventListener("blur", () => { if (el.value || el.type === "checkbox") check(el); });
+      el.addEventListener("input", () => { if (el.closest(".field")?.classList.contains("bad")) check(el); });
+      el.addEventListener("change", () => { if (el.closest(".field")?.classList.contains("bad")) check(el); });
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      $("f-phone").value = normPhone($("f-phone").value);
+      const els = ["f-name", "f-phone", "f-email", "f-age", "f-city", "f-consent"].map($);
+      const bad = els.filter((el) => !check(el));
+      if (bad.length) { bad[0].focus(); return; }
+      if ($("f-website").value) return; // bot
+      send();
+    });
+
+    /* Sign-ups go to the ReMind API (server.py): SQLite by default, PostgreSQL when DATABASE_URL is set. */
+    const REGISTRATION_ENDPOINT = "/api/register";
+    const FIELD_ID = { name: "f-name", phone: "f-phone", email: "f-email", age: "f-age", city: "f-city", consent: "f-consent", language: "f-lang", source: "f-src" };
+    const formErr = $("formErr");
+    const fail = (msg) => {
+      formErr.innerHTML = (msg ? msg + " " : "We couldn’t send your details just now. ") + 'Please try again, or call us on <a href="tel:+916366573772">+91 63665 73772</a>.';
+      formErr.hidden = false;
+    };
+    async function send() {
+      const btn = form.querySelector(".submit");
+      const f = form.elements;
+      const payload = {
+        name: f.namedItem("name").value, phone: f.phone.value, email: f.email.value, age: f.age.value, city: f.city.value,
+        language: f.language.value, source: f.source.value, consent: f.consent.checked, website: f.website.value,
+        utm_source: f.utm_source.value, utm_medium: f.utm_medium.value, utm_campaign: f.utm_campaign.value,
+        utm_term: f.utm_term.value, utm_content: f.utm_content.value, page_url: location.origin + location.pathname,
+      };
+      btn.disabled = true; btn.textContent = "Sending…"; formErr.hidden = true;
+      try {
+        const res = await fetch(REGISTRATION_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          if (data.duplicate) {
+            done.querySelector("h3").textContent = "You’re already on the list.";
+            done.querySelector("p").textContent = "We have your details. We’ll be in touch on WhatsApp soon.";
+          }
+          form.hidden = true; done.hidden = false; done.focus();
+          return;
+        }
+        if (data.errors) {
+          let first = null;
+          for (const [k, msg] of Object.entries(data.errors)) {
+            const el = $(FIELD_ID[k]); if (!el) continue;
+            const field = el.closest(".field"); field?.classList.add("bad"); el.setAttribute("aria-invalid", "true");
+            const err = field?.querySelector(".err"); if (err) err.textContent = msg;
+            first = first || el;
+          }
+          if (first) first.focus(); else fail();
+          return;
+        }
+        fail(data.error);
+      } catch {
+        fail();
+      } finally {
+        btn.disabled = false; btn.textContent = "Join ReMind";
+      }
+    }
+
+
+    if (reduce) document.documentElement.classList.add("rm");
+  </script>
+</body>
+</html>
